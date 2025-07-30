@@ -7014,7 +7014,7 @@
                   for (var t = "", n = 0; n < e.length; n++)
                     t += '<link rel="stylesheet" href="' + e[n] + '">';
                   return t;
-                },
+                };
                 // n = function (e) {
                 //   var t = "";
                 //   for (var n = 0; n < e.length; n++) {
