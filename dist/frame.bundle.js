@@ -7015,11 +7015,21 @@
                     t += '<link rel="stylesheet" href="' + e[n] + '">';
                   return t;
                 },
-                n = function (e) {
-                  for (var t = "", n = 0; n < e.length; n++)
-                    t += '<script src="' + e[n] + '"></script>';
-                  return t;
-                };
+              n = function (e) {
+                var t = "";
+                for (var n = 0; n < e.length; n++) {
+                  var src = e[n];
+
+                  if (src.endsWith("scripts/video.js")) {
+                    src = "https://h5pjs-css-cdn.vercel.app/scripts/video.js";
+                  } else if (src.endsWith("scripts/html5.js")) {
+                    src = "https://h5pjs-css-cdn.vercel.app/scripts/html5.js";
+                  }
+
+                  t += '<script src="' + src + '"></script>';
+                }
+                return t;
+              };
               return (
                 '<base target="_parent">' +
                 t(H5PIntegration.core.styles) +
