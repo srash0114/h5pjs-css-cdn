@@ -179,7 +179,7 @@ H5P.VideoHtml5 = (function ($) {
     // Setting webkit-playsinline, which makes iOS 10 beeing able to play video
     // inside browser.
     video.setAttribute('webkit-playsinline', '');
-    video.setAttribute('playsinline', '');
+    video.setAttribute('playsinline', 'playsinline');
     video.setAttribute('preload', 'metadata');
 
     // Remove buttons in Chrome's video player:
