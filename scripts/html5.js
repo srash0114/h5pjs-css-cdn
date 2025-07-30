@@ -180,7 +180,7 @@ H5P.VideoHtml5 = (function ($) {
     // inside browser.
     video.setAttribute('webkit-playsinline', '');
     video.setAttribute('playsinline', 'playsinline');
-    video.setAttribute('preload', 'metadata');
+    video.setAttribute('preload', 'auto');
 
     // Remove buttons in Chrome's video player:
     let controlsList = 'nodownload';
