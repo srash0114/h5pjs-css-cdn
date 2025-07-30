@@ -7023,7 +7023,7 @@
                       a = function () {
                         t.contentDocument.open(),
                           t.contentDocument.write(
-                            '<!doctype html><html class="h5p-iframe" lang="' +
+                            '<!doctype html><html class="h5p-iframe h5p-iframe2 h5p-iframe3" lang="' +
                               o +
                               '"><head>' +
                               e.getHeadTags(r) +
