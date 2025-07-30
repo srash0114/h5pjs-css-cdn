@@ -258,20 +258,6 @@ H5P.Video = (function ($, ContentCopyrights, MediaCopyright, handlers) {
   Video.prototype = Object.create(H5P.EventDispatcher.prototype);
   Video.prototype.constructor = Video;
 
-  // Player states
-  /** @constant {Number} */
-  Video.ENDED = 0;
-  /** @constant {Number} */
-  Video.PLAYING = 1;
-  /** @constant {Number} */
-  Video.PAUSED = 2;
-  /** @constant {Number} */
-  Video.BUFFERING = 3;
-  /**
-   * When video is queued to start
-   * @constant {Number}
-   */
-  Video.VIDEO_CUED = 5;
 
 
   // Used to convert between html and text, since URLs have html entities.
