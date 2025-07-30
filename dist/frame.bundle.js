@@ -6978,38 +6978,7 @@
                       }),
                       e.externalDispatcher &&
                         e.externalDispatcher.trigger("initialized");
-                  }),
-                e
-                  .jQuery("iframe.h5p-iframe:not(.h5p-initialized)", t)
-                  .each(function () {
-                    const t = this,
-                      n = e.jQuery(t),
-                      r = n.data("content-id"),
-                      i = H5PIntegration.contents["cid-" + r],
-                      o =
-                        i && i.metadata && i.metadata.defaultLanguage
-                          ? i.metadata.defaultLanguage
-                          : "en",
-                      a = function () {
-                        t.contentDocument.open(),
-                          t.contentDocument.write(
-                            '<!doctype html><html class="h5p-iframe" lang="' +
-                              o +
-                              '"><head>' +
-                              e.getHeadTags(r) +
-                              '</head><body><div class="h5p-content" data-content-id="' +
-                              r +
-                              '"/></body></html>'
-                          ),
-                          t.contentDocument.close();
-                      };
-                    n.addClass("h5p-initialized"),
-                      null === t.contentDocument
-                        ? (n.on("load", a), n.attr("src", "about:blank"))
-                        : a();
-                  });
-            }),
-            (e.getHeadTags = function (e) {
+                  }),(e.getHeadTags = function (e) {
               var t = function (e) {
                   for (var t = "", n = 0; n < e.length; n++)
                     t += '<link rel="stylesheet" href="' + e[n] + '">';
@@ -7039,6 +7008,36 @@
                 n(H5PIntegration.contents["cid-" + e].scripts) +
                 "<script>H5PIntegration = window.parent.H5PIntegration; var H5P = H5P || {}; H5P.externalEmbed = false;</script>"
               );
+            }),
+                e
+                  .jQuery("iframe.h5p-iframe:not(.h5p-initialized)", t)
+                  .each(function () {
+                    const t = this,
+                      n = e.jQuery(t),
+                      r = n.data("content-id"),
+                      i = H5PIntegration.contents["cid-" + r],
+                      o =
+                        i && i.metadata && i.metadata.defaultLanguage
+                          ? i.metadata.defaultLanguage
+                          : "en",
+                      a = function () {
+                        t.contentDocument.open(),
+                          t.contentDocument.write(
+                            '<!doctype html><html class="h5p-iframe" lang="' +
+                              o +
+                              '"><head>' +
+                              e.getHeadTags(r) +
+                              '</head><body><div class="h5p-content" data-content-id="' +
+                              r +
+                              '"/></body></html>'
+                          ),
+                          t.contentDocument.close();
+                      };
+                    n.addClass("h5p-initialized"),
+                      null === t.contentDocument
+                        ? (n.on("load", a), n.attr("src", "about:blank"))
+                        : a();
+                  });
             }),
             (e.communicator =
               window.postMessage && window.addEventListener
