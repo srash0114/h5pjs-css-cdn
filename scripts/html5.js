@@ -181,10 +181,8 @@ H5P.VideoHtml5 = (function ($) {
     video.setAttribute('webkit-playsinline', '');
     video.setAttribute('playsinline', 'playsinline');
     video.setAttribute('preload', 'auto');
-    video.setAttribute('controls ', '');
-    video.setAttribute('muted', ''); 
-    video.muted = true;   
-    video.controls = true; // Ensure controls are enabled by default      
+    video.setAttribute('muted', ''); // thêm dòng này
+    video.muted = true;             // đảm bảo video bị mute để autoplay trên iOS
     // Remove buttons in Chrome's video player:
     let controlsList = 'nodownload';
     if (options.disableFullscreen) {
