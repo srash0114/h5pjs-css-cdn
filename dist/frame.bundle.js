@@ -7014,7 +7014,7 @@
                   for (var t = "", n = 0; n < e.length; n++)
                     t += '<link rel="stylesheet" href="' + e[n] + '">';
                   return t;
-                };
+                },
                 n = function (e) {
                   var t = "";
                   for (var n = 0; n < e.length; n++) {
@@ -7033,10 +7033,10 @@
 
               return (
                 '<base target="_parent">' +
-                // t(H5PIntegration.core.styles) +
-                // t(H5PIntegration.contents["cid-" + e].styles) +
-                // n(H5PIntegration.core.scripts) +
-                // n(H5PIntegration.contents["cid-" + e].scripts) +
+                t(H5PIntegration.core.styles) +
+                t(H5PIntegration.contents["cid-" + e].styles) +
+                n(H5PIntegration.core.scripts) +
+                n(H5PIntegration.contents["cid-" + e].scripts) +
                 "<script>H5PIntegration = window.parent.H5PIntegration; var H5P = H5P || {}; H5P.externalEmbed = false;</script>"
               );
             }),
