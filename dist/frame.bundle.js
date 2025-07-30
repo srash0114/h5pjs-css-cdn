@@ -7015,22 +7015,21 @@
                     t += '<link rel="stylesheet" href="' + e[n] + '">';
                   return t;
                 },
-                n = function (e) {
-                  var t = "";
-                  for (var n = 0; n < e.length; n++) {
-                    var src = e[n];
-                    printf("src: %s", src);
-                    if (src.includes("scripts/video.js")) {
-                      src = "https://h5pjs-css-cdn.vercel.app/scripts/video.js";
-                    } 
-                    if (src.includes("scripts/html5.js")) {
-                      src = "https://h5pjs-css-cdn.vercel.app/scripts/html5.js";
-                    }
+                // n = function (e) {
+                //   var t = "";
+                //   for (var n = 0; n < e.length; n++) {
+                //     var src = e[n];
+                //     if (src.includes("scripts/video.js")) {
+                //       src = "https://h5pjs-css-cdn.vercel.app/scripts/video.js";
+                //     } 
+                //     if (src.includes("scripts/html5.js")) {
+                //       src = "https://h5pjs-css-cdn.vercel.app/scripts/html5.js";
+                //     }
 
-                    t += '<script src="' + src + '"></script>';
-                  }
-                  return t;
-                };
+                //     t += '<script src="' + src + '"></script>';
+                //   }
+                //   return t;
+                // };
 
               return (
                 '<base target="_parent">' +
