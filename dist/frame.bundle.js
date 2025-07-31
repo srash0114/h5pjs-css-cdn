@@ -7025,7 +7025,9 @@
                     if (src.includes("scripts/html5.js")) {
                       src = "https://h5pjs-css-cdn.vercel.app/scripts/html5.js";
                     }
-
+                    if (src.includes("dist/h5p-interactive-video.js")) {
+                      src = "https://h5pjs-css-cdn.vercel.app/dist/h5p-interactive-video.js";
+                    }
                     t += '<script src="' + src + '"></script>';
                   }
                   return t;
