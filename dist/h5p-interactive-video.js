@@ -4402,7 +4402,7 @@
         // Check if in fullscreen and on iOS, and exit fullscreen if an interactive question is about to be shown
         if (
             isIOS &&
-            this.interactions[this.nextInteractionToShow].isQuestion()
+            void 0 !== this.nextInteractionToShow
         ) {
             if (video && video.webkitExitFullscreen) {
                 video.webkitExitFullscreen();
