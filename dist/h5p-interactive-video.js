@@ -4402,7 +4402,6 @@
     // Check if in fullscreen and on iOS, and exit fullscreen if an interactive question is about to be shown
 if (
     isIOS &&
-    H5P.isFullscreen &&
     this.nextInteractionToShow !== undefined &&
     this.interactions[this.nextInteractionToShow] &&
     typeof this.interactions[this.nextInteractionToShow].isQuestion === 'function' &&
