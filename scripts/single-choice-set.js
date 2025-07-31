@@ -663,8 +663,8 @@ H5P.SingleChoiceSet = (function ($, UI, Question, SingleChoice, SolutionView, Re
    * @param {number} index
    */
   SingleChoiceSet.prototype.startStopWatch = function (index) {
-    // this.stopWatches[index] = this.stopWatches[index] || new StopWatch();
-    // this.stopWatches[index].start();
+    this.stopWatches[index] = this.stopWatches[index] || new StopWatch();
+    this.stopWatches[index].start();
   };
 
   /**
