@@ -633,6 +633,15 @@
         "H5P.FreeTextQuestion" === p &&
           d.on("continue", function () {
             C(), e.play();
+            if (
+              isIOS
+            ) {
+                if (video && video.webkitExitFullscreen) {
+                    video.webkitExitFullscreen();
+                    this.trigger("exitFullScreen");
+                    this.resizeInteractions();
+                }
+            }
           });
       },
       P = function (o) {
@@ -4358,6 +4367,7 @@
           (void 0 === o || i.from < this.interactions[o].getDuration().from) &&
           (o = n);
       }
+
       return o;
     }),
     (Z.prototype.findNextInteractionToHide = function (t) {
