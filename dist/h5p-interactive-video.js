@@ -544,13 +544,14 @@
     isIOS &&
     (H5P.isFullscreen ||
       this.$container.hasClass("h5p-fullscreen") ||
-      this.$container.hasClass("h5p-semi-fullscreen"))
+      this.$container.hasClass("h5p-semi-fullscreen") ||
+      (video && document.webkitFullscreenElement === video))
   ) {
     // Thoát fullscreen
-    if (typeof H5P.exitFullScreen !== "undefined" && H5P.fullScreenBrowserPrefix) {
-      H5P.exitFullScreen();
-    } else if (video && video.webkitExitFullscreen) {
+    if (video && video.webkitExitFullscreen) {
       video.webkitExitFullscreen();
+    } else if (typeof H5P.exitFullScreen !== "undefined" && H5P.fullScreenBrowserPrefix) {
+      H5P.exitFullScreen();
     } else if (!H5P.fullScreenBrowserPrefix) {
       J(".h5p-disable-fullscreen").click();
     } else if (H5P.fullScreenBrowserPrefix === "") {
@@ -563,6 +564,7 @@
     a.trigger("exitFullScreen");
   }
 
+  // Tiếp tục xử lý sự kiện editor
   if (e.editor) {
     n.hover(
       function () {
