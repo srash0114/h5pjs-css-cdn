@@ -662,21 +662,21 @@ H5P.SingleChoiceSet = (function ($, UI, Question, SingleChoice, SolutionView, Re
    *
    * @param {number} index
    */
-  // SingleChoiceSet.prototype.startStopWatch = function (index) {
-  //   this.stopWatches[index] = this.stopWatches[index] || new StopWatch();
-  //   this.stopWatches[index].start();
-  // };
+  SingleChoiceSet.prototype.startStopWatch = function (index) {
+    // this.stopWatches[index] = this.stopWatches[index] || new StopWatch();
+    // this.stopWatches[index].start();
+  };
 
-  // /**
-  //  * Stops a stopwatch for indexed slide
-  //  *
-  //  * @param {number} index
-  //  */
-  // SingleChoiceSet.prototype.stopStopWatch = function (index) {
-  //   if (this.stopWatches[index]) {
-  //     this.stopWatches[index].stop();
-  //   }
-  // };
+  /**
+   * Stops a stopwatch for indexed slide
+   *
+   * @param {number} index
+   */
+  SingleChoiceSet.prototype.stopStopWatch = function (index) {
+    if (this.stopWatches[index]) {
+      this.stopWatches[index].stop();
+    }
+  };
 
   /**
    * Returns the passed time in seconds of a stopwatch on an indexed slide,
