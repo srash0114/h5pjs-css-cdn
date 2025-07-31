@@ -500,59 +500,108 @@
       this.on("show-mask", function () {
         L(this.getElement());
       });
-    var S = function (o) {
-        (n = B("<div/>", {
-          tabindex: 0,
-          role: "button",
-          class: "h5p-interaction " + l + (o ? "" : " h5p-hidden"),
-          "aria-haspopup": "dialog",
-          "aria-expanded": "false",
-          "aria-label": f,
-          css: { left: t.x + "%", top: t.y + "%", width: "", height: "" },
-          on: {
-            click: function () {
-              a.dialogDisabled || (P(), n.attr("aria-expanded", "true"));
-            },
-            keydown: function (t) {
-              (13 !== t.which && 32 !== t.which) ||
-                a.dialogDisabled ||
-                (P(), n.attr("aria-expanded", "true"), t.preventDefault());
-            },
-          },
-        })),
-          a.getRequiresCompletion() &&
-            void 0 === e.editor &&
-            e.currentState !== H5P.InteractiveVideo.SEEKING &&
-            P(!0),
-          B("<div/>", { class: "h5p-touch-area" }).appendTo(n),
-          B("<div/>", { class: "h5p-interaction-button", style:"width: 50px; height: 50px; border-radius: 50%;background-color: #9c27b0;display: flex;align-items: center;justify-content: center;font-size: 32px;color: white; cursor: pointer;"}).appendTo(n),
-          e.editor &&
-            n
-              .hover(
-                function () {
-                  n.is(".focused") ||
-                  n.is(":focus") ||
-                  (e.dnb && (!e.dnb || e.dnb.newElement))
-                    ? (e.editor.hideInteractionTitle(), (b = !1))
-                    : (e.editor.showInteractionTitle(f, n), (b = !0));
-                },
-                function () {
-                  e.editor.hideInteractionTitle(), (b = !1);
-                }
-              )
-              .focus(function () {
-                e.editor.hideInteractionTitle(), (b = !1);
-              })
-              .click(function () {
-                e.editor.hideInteractionTitle();
-              });
-        var s = M(A(t.label));
-        t.label && s && (i = $(t.label, "h5p-interaction").appendTo(n)),
-          a.trigger("display", n),
-          setTimeout(function () {
-            n && n.removeClass("h5p-hidden");
-          }, 0);
+   var S = function (o) {
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const video = this.$container ? this.$container.find("video")[0] : null;
+
+  n = B("<div/>", {
+    tabindex: 0,
+    role: "button",
+    class: "h5p-interaction " + l + (o ? "" : " h5p-hidden"),
+    "aria-haspopup": "dialog",
+    "aria-expanded": "false",
+    "aria-label": f,
+    css: { left: t.x + "%", top: t.y + "%", width: "", height: "" },
+    on: {
+      click: function () {
+        a.dialogDisabled || (P(), n.attr("aria-expanded", "true"));
       },
+      keydown: function (t) {
+        (13 !== t.which && 32 !== t.which) ||
+          a.dialogDisabled ||
+          (P(), n.attr("aria-expanded", "true"), t.preventDefault());
+      },
+    },
+  });
+
+  if (
+    a.getRequiresCompletion() &&
+    void 0 === e.editor &&
+    e.currentState !== H5P.InteractiveVideo.SEEKING
+  ) {
+    P(!0);
+  }
+
+  B("<div/>", { class: "h5p-touch-area" }).appendTo(n);
+  B("<div/>", {
+    class: "h5p-interaction-button",
+    style:
+      "width: 50px; height: 50px; border-radius: 50%; background-color: #9c27b0; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; cursor: pointer;",
+  }).appendTo(n);
+
+  // Kiểm tra nếu là iOS và đang ở fullscreen
+  if (
+    isIOS &&
+    (H5P.isFullscreen ||
+      this.$container.hasClass("h5p-fullscreen") ||
+      this.$container.hasClass("h5p-semi-fullscreen"))
+  ) {
+    // Thoát fullscreen
+    if (typeof H5P.exitFullScreen !== "undefined" && H5P.fullScreenBrowserPrefix) {
+      H5P.exitFullScreen();
+    } else if (video && video.webkitExitFullscreen) {
+      video.webkitExitFullscreen();
+    } else if (!H5P.fullScreenBrowserPrefix) {
+      J(".h5p-disable-fullscreen").click();
+    } else if (H5P.fullScreenBrowserPrefix === "") {
+      window.top.document.exitFullScreen();
+    } else if (H5P.fullScreenBrowserPrefix === "ms") {
+      window.top.document.msExitFullscreen();
+    } else {
+      window.top.document[H5P.fullScreenBrowserPrefix + "CancelFullScreen"]();
+    }
+    a.trigger("exitFullScreen");
+  }
+
+  if (e.editor) {
+    n.hover(
+      function () {
+        if (
+          !n.is(".focused") &&
+          !n.is(":focus") &&
+          !(e.dnb && (!e.dnb || e.dnb.newElement))
+        ) {
+          e.editor.showInteractionTitle(f, n);
+          b = !0;
+        } else {
+          e.editor.hideInteractionTitle();
+          b = !1;
+        }
+      },
+      function () {
+        e.editor.hideInteractionTitle();
+        b = !1;
+      }
+    )
+      .focus(function () {
+        e.editor.hideInteractionTitle();
+        b = !1;
+      })
+      .click(function () {
+        e.editor.hideInteractionTitle();
+      });
+  }
+
+  var s = M(A(t.label));
+  if (t.label && s) {
+    i = B(t.label, "h5p-interaction").appendTo(n);
+  }
+
+  a.trigger("display", n);
+  setTimeout(function () {
+    n && n.removeClass("h5p-hidden");
+  }, 0);
+},
       $ = function (t) {
         return B("<div/>", {
           class: "h5p-interaction-label ".concat(
