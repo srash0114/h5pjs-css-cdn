@@ -4409,13 +4409,6 @@
                 : null;
           o && o.getDuration().from <= t;
         ) {
-            if (isIOS) {
-              if (video && video.webkitExitFullscreen) {
-                  video.webkitExitFullscreen();
-                  this.trigger("exitFullScreen");
-                  this.resizeInteractions();
-              }
-            }
             o.toggle(t),
                 o.repositionToWrapper(this.$videoWrapper),
                 this.visibleInteractions.push(this.nextInteractionToShow),
@@ -4429,6 +4422,13 @@
                     void 0 !== this.nextInteractionToShow
                         ? this.interactions[this.nextInteractionToShow]
                         : null);
+            if (isIOS) {
+              if (video && video.webkitExitFullscreen) {
+                  video.webkitExitFullscreen();
+                  this.trigger("exitFullScreen");
+                  this.resizeInteractions();
+              }
+            }
           }
           this.accessibility.announceInteractions(e);
     }),
