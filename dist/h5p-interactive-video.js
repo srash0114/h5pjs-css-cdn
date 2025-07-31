@@ -4069,33 +4069,46 @@
         r.remove();
     }),
     (Z.prototype.toggleFullScreen = function () {
-    if (
-        H5P.isFullscreen ||
-        this.$container.hasClass("h5p-fullscreen") ||
-        this.$container.hasClass("h5p-semi-fullscreen")
-    ) {
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen(); // Safari-specific
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen(); // IE/Edge
-        }
-        this.trigger("exitFullScreen");
+  const isFullscreen =
+    H5P.isFullscreen ||
+    this.$container.hasClass("h5p-fullscreen") ||
+    this.$container.hasClass("h5p-semi-fullscreen");
+
+  if (isFullscreen) {
+    // Exit fullscreen
+    if (H5P.exitFullScreen && H5P.fullScreenBrowserPrefix) {
+      H5P.exitFullScreen();
+    } else if (H5P.fullScreenBrowserPrefix === undefined) {
+      J(".h5p-disable-fullscreen").click();
+    } else if (H5P.fullScreenBrowserPrefix === "") {
+      window.top.document.exitFullScreen();
+    } else if (H5P.fullScreenBrowserPrefix === "ms") {
+      window.top.document.msExitFullscreen();
+    } else if (H5P.fullScreenBrowserPrefix === "webkit") {
+      // Handle iOS Safari specifically
+      const video = this.$container.find("video")[0];
+      if (video && video.webkitExitFullscreen) {
+        video.webkitExitFullscreen();
+      } else {
+        window.top.document.webkitCancelFullScreen();
+      }
     } else {
-        // Enter fullscreen
-        const element = this.$container[0]; // Ensure this is a DOM element
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen(); // Safari-specific
-        } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen(); // IE/Edge
-        }
-        this.trigger("enterFullScreen");
+      window.top.document[H5P.fullScreenBrowserPrefix + "CancelFullScreen"]();
     }
-    this.resizeInteractions();
+    this.trigger("exitFullScreen");
+  } else {
+    // Enter fullscreen
+    const video = this.$container.find("video")[0];
+    if (video && video.webkitEnterFullscreen && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      video.webkitEnterFullscreen();
+    } else {
+      H5P.fullScreen(this.$container, this);
+    }
+    if (!H5P.exitFullScreen) {
+      this.trigger("enterFullScreen");
+    }
+  }
+  this.resizeInteractions();
 }),
     (Z.prototype.timeUpdate = function (t, e) {
       var o = this;
