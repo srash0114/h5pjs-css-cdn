@@ -4422,17 +4422,17 @@
                     void 0 !== this.nextInteractionToShow
                         ? this.interactions[this.nextInteractionToShow]
                         : null);
-                if (
-                    isIOS && void 0 !== this.nextInteractionToShow
-                ) {
-                    if (video && video.webkitExitFullscreen) {
-                        video.webkitExitFullscreen();
-                        this.trigger("exitFullScreen");
-                        this.resizeInteractions();
-                    }
-                }
-        }
-        this.accessibility.announceInteractions(e);
+                        if (
+                            isIOS
+                        ) {
+                            if (video && video.webkitExitFullscreen) {
+                                video.webkitExitFullscreen();
+                                this.trigger("exitFullScreen");
+                                this.resizeInteractions();
+                            }
+                        }
+          }
+          this.accessibility.announceInteractions(e);
     }),
     (Z.prototype.toggleInteractions = function (t) {
       this.hideInteractions(t), this.showInteractions(t);
