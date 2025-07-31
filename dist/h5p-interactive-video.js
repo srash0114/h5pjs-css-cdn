@@ -525,7 +525,10 @@
             e.currentState !== H5P.InteractiveVideo.SEEKING &&
             P(!0),
           B("<div/>", { class: "h5p-touch-area" }).appendTo(n),
-          B("<div/>", { class: "h5p-interaction-button" }).appendTo(n),
+          B("<div/>", {
+            class: "h5p-interaction-button",
+            style: "width: 100px; height: 50px; font-size: 18px;"
+            }).appendTo(n);
           e.editor &&
             n
               .hover(
@@ -4069,33 +4072,33 @@
         r.remove();
     }),
     (Z.prototype.toggleFullScreen = function () {
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const video = this.$container.find("video")[0];
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const video = this.$container.find("video")[0];
 
-  H5P.isFullscreen ||
-  this.$container.hasClass("h5p-fullscreen") ||
-  this.$container.hasClass("h5p-semi-fullscreen")
-    ? void 0 !== H5P.exitFullScreen &&
-      void 0 !== H5P.fullScreenBrowserPrefix
-      ? H5P.exitFullScreen()
-      : (void 0 === H5P.fullScreenBrowserPrefix
-          ? (!isIOS && J(".h5p-disable-fullscreen").click())
-          : "" === H5P.fullScreenBrowserPrefix
-          ? window.top.document.exitFullScreen()
-          : "ms" === H5P.fullScreenBrowserPrefix
-          ? window.top.document.msExitFullscreen()
-          : isIOS && video && video.webkitExitFullscreen
-          ? video.webkitExitFullscreen()
-          : window.top.document[
-              H5P.fullScreenBrowserPrefix + "CancelFullScreen"
-            ](),
-        this.trigger("exitFullScreen"))
-    : isIOS && video && video.webkitEnterFullscreen
-    ? video.webkitEnterFullscreen()
-    : (H5P.fullScreen(this.$container, this),
-      void 0 === H5P.exitFullScreen && this.trigger("enterFullScreen")),
-    this.resizeInteractions();
-}),
+    H5P.isFullscreen ||
+    this.$container.hasClass("h5p-fullscreen") ||
+    this.$container.hasClass("h5p-semi-fullscreen")
+        ? void 0 !== H5P.exitFullScreen &&
+        void 0 !== H5P.fullScreenBrowserPrefix
+        ? H5P.exitFullScreen()
+        : (void 0 === H5P.fullScreenBrowserPrefix
+            ? (!isIOS && J(".h5p-disable-fullscreen").click())
+            : "" === H5P.fullScreenBrowserPrefix
+            ? window.top.document.exitFullScreen()
+            : "ms" === H5P.fullScreenBrowserPrefix
+            ? window.top.document.msExitFullscreen()
+            : isIOS && video && video.webkitExitFullscreen
+            ? video.webkitExitFullscreen()
+            : window.top.document[
+                H5P.fullScreenBrowserPrefix + "CancelFullScreen"
+                ](),
+            this.trigger("exitFullScreen"))
+        : isIOS && video && video.webkitEnterFullscreen
+        ? video.webkitEnterFullscreen()
+        : (H5P.fullScreen(this.$container, this),
+        void 0 === H5P.exitFullScreen && this.trigger("enterFullScreen")),
+        this.resizeInteractions();
+    }),
     (Z.prototype.timeUpdate = function (t, e) {
       var o = this;
       (o.currentTime = t),
