@@ -4069,47 +4069,26 @@
         r.remove();
     }),
     (Z.prototype.toggleFullScreen = function () {
-  const isFullscreen =
-    H5P.isFullscreen ||
-    this.$container.hasClass("h5p-fullscreen") ||
-    this.$container.hasClass("h5p-semi-fullscreen");
-
-  if (isFullscreen) {
-    // Exit fullscreen
-    if (H5P.exitFullScreen && H5P.fullScreenBrowserPrefix) {
-      H5P.exitFullScreen();
-    } else if (H5P.fullScreenBrowserPrefix === undefined) {
-      J(".h5p-disable-fullscreen").click();
-    } else if (H5P.fullScreenBrowserPrefix === "") {
-      window.top.document.exitFullScreen();
-    } else if (H5P.fullScreenBrowserPrefix === "ms") {
-      window.top.document.msExitFullscreen();
-    } else if (H5P.fullScreenBrowserPrefix === "webkit") {
-      // Handle iOS Safari specifically
-      const video = this.$container.find("video")[0];
-      if (video && video.webkitExitFullscreen) {
-        video.webkitExitFullscreen();
-      } else {
-        window.top.document.webkitCancelFullScreen();
-      }
-    } else {
-      window.top.document[H5P.fullScreenBrowserPrefix + "CancelFullScreen"]();
-    }
-    this.trigger("exitFullScreen");
-  } else {
-    // Enter fullscreen
-    const video = this.$container.find("video")[0];
-    if (video && video.webkitEnterFullscreen && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      video.webkitEnterFullscreen();
-    } else {
-      H5P.fullScreen(this.$container, this);
-    }
-    if (!H5P.exitFullScreen) {
-      this.trigger("enterFullScreen");
-    }
-  }
-  this.resizeInteractions();
-}),
+      H5P.isFullscreen ||
+      this.$container.hasClass("h5p-fullscreen") ||
+      this.$container.hasClass("h5p-semi-fullscreen")
+        ? void 0 !== H5P.exitFullScreen &&
+          void 0 !== H5P.fullScreenBrowserPrefix
+          ? H5P.exitFullScreen()
+          : (void 0 === H5P.fullScreenBrowserPrefix
+              ? J(".h5p-disable-fullscreen").click()
+              : "" === H5P.fullScreenBrowserPrefix
+              ? window.top.document.exitFullScreen()
+              : "ms" === H5P.fullScreenBrowserPrefix
+              ? window.top.document.msExitFullscreen()
+              : window.top.document[
+                  H5P.fullScreenBrowserPrefix + "CancelFullScreen"
+                ](),
+            this.trigger("exitFullScreen"))
+        : (H5P.fullScreen(this.$container, this),
+          void 0 === H5P.exitFullScreen && this.trigger("enterFullScreen")),
+        this.resizeInteractions();
+    }),
     (Z.prototype.timeUpdate = function (t, e) {
       var o = this;
       (o.currentTime = t),
