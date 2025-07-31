@@ -4406,9 +4406,6 @@
         (this.nextInteractionToShow = this.findNextInteractionToShow(t));
     if (
         isIOS &&
-        this.nextInteractionToShow !== undefined &&
-        this.interactions[this.nextInteractionToShow] &&
-        typeof this.interactions[this.nextInteractionToShow].isQuestion === 'function' &&
         this.interactions[this.nextInteractionToShow].isQuestion()
     ) {
         
