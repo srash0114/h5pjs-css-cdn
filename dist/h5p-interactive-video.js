@@ -519,7 +519,7 @@
                 (P(), n.attr("aria-expanded", "true"), t.preventDefault());
             },
           },
-        }))// Hàm hỗ trợ
+        })),// Hàm hỗ trợ
 function isIOS() {
   return (
     /iPad|iPhone|iPod/.test(navigator.userAgent) ||
