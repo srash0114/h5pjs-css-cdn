@@ -636,9 +636,9 @@
             if (
               isIOS
             ) {
-                if (video && video.webkitExitFullscreen) {
-                    video.webkitExitFullscreen();
-                    this.trigger("exitFullScreen");
+                if (video && video.webkitEnterFullscreen) {
+                    video.webkitEnterFullscreen();
+                    this.trigger("enterFullScreen");
                     this.resizeInteractions();
                 }
             }
