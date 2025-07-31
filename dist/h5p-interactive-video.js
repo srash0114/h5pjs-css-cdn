@@ -4395,33 +4395,33 @@
                 ]
               : null);
     }),
-    (Z.prototype.showInteractions = function (t) {
-      void 0 === this.nextInteractionToShow &&
-        (this.nextInteractionToShow = this.findNextInteractionToShow(t));
-      for (
-        var e = [],
-          o =
-            void 0 !== this.nextInteractionToShow
-              ? this.interactions[this.nextInteractionToShow]
-              : null;
-        o && o.getDuration().from <= t;
+    // (Z.prototype.showInteractions = function (t) {
+    //   void 0 === this.nextInteractionToShow &&
+    //     (this.nextInteractionToShow = this.findNextInteractionToShow(t));
+    //   for (
+    //     var e = [],
+    //       o =
+    //         void 0 !== this.nextInteractionToShow
+    //           ? this.interactions[this.nextInteractionToShow]
+    //           : null;
+    //     o && o.getDuration().from <= t;
 
-      )
-        o.toggle(t),
-          o.repositionToWrapper(this.$videoWrapper),
-          this.visibleInteractions.push(this.nextInteractionToShow),
-          (this.nextInteractionToHide = void 0),
-          e.push(o),
-          (this.nextInteractionToShow = this.findNextInteractionToShow(
-            t,
-            this.nextInteractionToShow
-          )),
-          (o =
-            void 0 !== this.nextInteractionToShow
-              ? this.interactions[this.nextInteractionToShow]
-              : null);
-      this.accessibility.announceInteractions(e);
-    }),
+    //   )
+    //     o.toggle(t),
+    //       o.repositionToWrapper(this.$videoWrapper),
+    //       this.visibleInteractions.push(this.nextInteractionToShow),
+    //       (this.nextInteractionToHide = void 0),
+    //       e.push(o),
+    //       (this.nextInteractionToShow = this.findNextInteractionToShow(
+    //         t,
+    //         this.nextInteractionToShow
+    //       )),
+    //       (o =
+    //         void 0 !== this.nextInteractionToShow
+    //           ? this.interactions[this.nextInteractionToShow]
+    //           : null);
+    //   this.accessibility.announceInteractions(e);
+    // }),
     (Z.prototype.toggleInteractions = function (t) {
       this.hideInteractions(t), this.showInteractions(t);
     }),
