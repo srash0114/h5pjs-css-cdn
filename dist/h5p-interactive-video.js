@@ -4396,74 +4396,52 @@
               : null);
     }),
     (Z.prototype.showInteractions = function (t) {
-    void 0 === this.nextInteractionToShow &&
-        (this.nextInteractionToShow = this.findNextInteractionToShow(t));
-
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     const video = this.$container.find("video")[0];
-    var e = [],
-        o =
-        void 0 !== this.nextInteractionToShow
-            ? this.interactions[this.nextInteractionToShow]
-            : null;
 
-    while (o && o.getDuration().from <= t) {
-        // Thoát fullscreen nếu interaction yêu cầu hoàn thành
-        if (o.getRequiresCompletion && o.getRequiresCompletion()) {
-        if (
-            H5P.isFullscreen ||
+    // Check if in fullscreen and on iOS, and exit fullscreen if an interactive question is about to be shown
+    if (
+        isIOS &&
+        (H5P.isFullscreen ||
             this.$container.hasClass("h5p-fullscreen") ||
-            this.$container.hasClass("h5p-semi-fullscreen")
-        ) {
-            if (
-            typeof H5P.exitFullScreen !== "undefined" &&
-            typeof H5P.fullScreenBrowserPrefix !== "undefined"
-            ) {
-            H5P.exitFullScreen();
-            } else {
-            if (typeof H5P.fullScreenBrowserPrefix === "undefined") {
-                if (!isIOS) {
-                H5P.jQuery(".h5p-disable-fullscreen").click();
-                }
-            } else if (H5P.fullScreenBrowserPrefix === "") {
-                window.top.document.exitFullscreen();
-            } else if (H5P.fullScreenBrowserPrefix === "ms") {
-                window.top.document.msExitFullscreen();
-            } else if (
-                isIOS &&
-                video &&
-                typeof video.webkitExitFullscreen === "function"
-            ) {
-                video.webkitExitFullscreen();
-            } else {
-                window.top.document[
-                H5P.fullScreenBrowserPrefix + "CancelFullScreen"
-                ]();
-            }
-            }
-
-            if (typeof this.trigger === "function") {
+            this.$container.hasClass("h5p-semi-fullscreen")) &&
+        void 0 !== this.nextInteractionToShow &&
+        this.interactions[this.nextInteractionToShow].isQuestion &&
+        this.interactions[this.nextInteractionToShow].isQuestion()
+    ) {
+        if (video && video.webkitExitFullscreen) {
+            video.webkitExitFullscreen();
             this.trigger("exitFullScreen");
-            }
+            this.resizeInteractions();
         }
-        }
+    }
 
+    void 0 === this.nextInteractionToShow &&
+        (this.nextInteractionToShow = this.findNextInteractionToShow(t));
+    for (
+        var e = [],
+            o =
+                void 0 !== this.nextInteractionToShow
+                    ? this.interactions[this.nextInteractionToShow]
+                    : null;
+        o && o.getDuration().from <= t;
+    ) {
         o.toggle(t),
-        o.repositionToWrapper(this.$videoWrapper),
-        this.visibleInteractions.push(this.nextInteractionToShow),
-        (this.nextInteractionToHide = void 0),
-        e.push(o),
-        (this.nextInteractionToShow = this.findNextInteractionToShow(
-            t,
-            this.nextInteractionToShow
-        )),
-        (o =
-            void 0 !== this.nextInteractionToShow
-            ? this.interactions[this.nextInteractionToShow]
-            : null);
+            o.repositionToWrapper(this.$videoWrapper),
+            this.visibleInteractions.push(this.nextInteractionToShow),
+            (this.nextInteractionToHide = void 0),
+            e.push(o),
+            (this.nextInteractionToShow = this.findNextInteractionToShow(
+                t,
+                this.nextInteractionToShow
+            )),
+            (o =
+                void 0 !== this.nextInteractionToShow
+                    ? this.interactions[this.nextInteractionToShow]
+                    : null);
     }
     this.accessibility.announceInteractions(e);
-    }),
+}),
     (Z.prototype.toggleInteractions = function (t) {
       this.hideInteractions(t), this.showInteractions(t);
     }),
