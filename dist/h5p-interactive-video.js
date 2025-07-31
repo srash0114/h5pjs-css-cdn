@@ -4399,7 +4399,14 @@
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     const video = this.$container.find("video")[0];
 
-    if (isIOS ) {
+    // Check if in fullscreen and on iOS, and exit fullscreen if an interactive question is about to be shown
+    if (
+        isIOS &&
+        H5P.isFullscreen &&
+        void 0 !== this.nextInteractionToShow &&
+        this.interactions[this.nextInteractionToShow].isQuestion &&
+        this.interactions[this.nextInteractionToShow].isQuestion()
+    ) {
         if (video && video.webkitExitFullscreen) {
             video.webkitExitFullscreen();
             this.trigger("exitFullScreen");
