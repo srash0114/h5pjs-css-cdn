@@ -4407,11 +4407,11 @@ if (
     typeof this.interactions[this.nextInteractionToShow].isQuestion === 'function' &&
     this.interactions[this.nextInteractionToShow].isQuestion()
 ) {
-    if (video && typeof video.webkitExitFullscreen === 'function') {
+    
         video.webkitExitFullscreen();
         this.trigger("exitFullScreen");
         this.resizeInteractions();
-    }
+    
 }
 
     void 0 === this.nextInteractionToShow &&
