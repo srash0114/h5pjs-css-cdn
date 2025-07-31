@@ -525,10 +525,7 @@
             e.currentState !== H5P.InteractiveVideo.SEEKING &&
             P(!0),
           B("<div/>", { class: "h5p-touch-area" }).appendTo(n),
-          B("<div/>", {
-            class: "h5p-interaction-button",
-            style: "width: 50px; height: 50px; font-size: 18px;"
-            }).appendTo(n);
+          B("<div/>", { class: "h5p-interaction-button" }).appendTo(n),
           e.editor &&
             n
               .hover(
