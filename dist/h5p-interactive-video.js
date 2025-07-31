@@ -633,15 +633,6 @@
         "H5P.FreeTextQuestion" === p &&
           d.on("continue", function () {
             C(), e.play();
-            if (
-              isIOS
-            ) {
-                if (video && video.webkitEnterFullscreen) {
-                    video.webkitEnterFullscreen();
-                    this.trigger("enterFullScreen");
-                    this.resizeInteractions();
-                }
-            }
           });
       },
       P = function (o) {
@@ -4367,7 +4358,6 @@
           (void 0 === o || i.from < this.interactions[o].getDuration().from) &&
           (o = n);
       }
-
       return o;
     }),
     (Z.prototype.findNextInteractionToHide = function (t) {
@@ -4432,15 +4422,15 @@
                     void 0 !== this.nextInteractionToShow
                         ? this.interactions[this.nextInteractionToShow]
                         : null);
-        }
-        if (
-            isIOS
-        ) {
-            if (video && video.webkitExitFullscreen) {
-                video.webkitExitFullscreen();
-                this.trigger("exitFullScreen");
-                this.resizeInteractions();
-            }
+                        if (
+              isIOS
+              ) {
+                  if (video && video.webkitExitFullscreen) {
+                      video.webkitExitFullscreen();
+                      this.trigger("exitFullScreen");
+                      this.resizeInteractions();
+                  }
+              }
         }
         this.accessibility.announceInteractions(e);
     }),
