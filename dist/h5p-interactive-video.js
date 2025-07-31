@@ -519,40 +519,112 @@
                 (P(), n.attr("aria-expanded", "true"), t.preventDefault());
             },
           },
-        })),
-          a.getRequiresCompletion() &&
-            void 0 === e.editor &&
-            e.currentState !== H5P.InteractiveVideo.SEEKING &&
-            P(!0),
-          B("<div/>", { class: "h5p-touch-area" }).appendTo(n),
-          B("<div/>", { class: "h5p-interaction-button", style:"width: 50px; height: 50px; border-radius: 50%;background-color: #9c27b0;display: flex;align-items: center;justify-content: center;font-size: 32px;color: white; cursor: pointer;"}).appendTo(n),
-          e.editor &&
-            n
-              .hover(
-                function () {
-                  n.is(".focused") ||
-                  n.is(":focus") ||
-                  (e.dnb && (!e.dnb || e.dnb.newElement))
-                    ? (e.editor.hideInteractionTitle(), (b = !1))
-                    : (e.editor.showInteractionTitle(f, n), (b = !0));
-                },
-                function () {
-                  e.editor.hideInteractionTitle(), (b = !1);
-                }
-              )
-              .focus(function () {
-                e.editor.hideInteractionTitle(), (b = !1);
-              })
-              .click(function () {
-                e.editor.hideInteractionTitle();
-              });
-        var s = M(A(t.label));
-        t.label && s && (i = $(t.label, "h5p-interaction").appendTo(n)),
-          a.trigger("display", n),
-          setTimeout(function () {
-            n && n.removeClass("h5p-hidden");
-          }, 0);
+        }))// Hàm hỗ trợ
+function isIOS() {
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.userAgent.includes("Macintosh") && "ontouchend" in document)
+  );
+}
+
+function isFullscreen() {
+  return (
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement
+  );
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+}
+
+// Logic chính
+a.getRequiresCompletion() &&
+  void 0 === e.editor &&
+  e.currentState !== H5P.InteractiveVideo.SEEKING &&
+  P(!0);
+
+// Đảm bảo container có position: relative
+n.css("position", "relative");
+
+// Tạo vùng chạm
+B("<div/>", { class: "h5p-touch-area" }).appendTo(n);
+
+// Tạo nút tương tác
+B("<div/>", {
+  class: "h5p-interaction-button",
+  style: `
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #9c27b0;
+    color: white;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+  `
+})
+.appendTo(n)
+.click(function () {
+  // Nếu là iOS và đang fullscreen thì tự thoát fullscreen
+  if (isIOS() && isFullscreen()) {
+    exitFullscreen();
+  }
+
+  // TODO: Thêm xử lý interaction nếu cần
+});
+
+// Xử lý trong chế độ chỉnh sửa (editor)
+if (e.editor) {
+  n
+    .hover(
+      function () {
+        n.is(".focused") || n.is(":focus") || (e.dnb && (!e.dnb || e.dnb.newElement))
+          ? (e.editor.hideInteractionTitle(), (b = !1))
+          : (e.editor.showInteractionTitle(f, n), (b = !0));
       },
+      function () {
+        e.editor.hideInteractionTitle();
+        b = !1;
+      }
+    )
+    .focus(function () {
+      e.editor.hideInteractionTitle();
+      b = !1;
+    })
+    .click(function () {
+      e.editor.hideInteractionTitle();
+    });
+}
+
+// Thêm tiêu đề nếu có
+var s = M(A(t.label));
+if (t.label && s) {
+  i = $(t.label, "h5p-interaction").appendTo(n);
+}
+
+// Kích hoạt sự kiện hiển thị
+a.trigger("display", n);
+setTimeout(function () {
+  n && n.removeClass("h5p-hidden");
+}, 0);
+    };
       $ = function (t) {
         return B("<div/>", {
           class: "h5p-interaction-label ".concat(
