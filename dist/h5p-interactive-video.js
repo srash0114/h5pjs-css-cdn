@@ -527,7 +527,7 @@
           B("<div/>", { class: "h5p-touch-area" }).appendTo(n),
           B("<div/>", {
             class: "h5p-interaction-button",
-            style: "width: 100px; height: 50px; font-size: 18px;"
+            style: "width: 50px; height: 50px; font-size: 18px;"
             }).appendTo(n);
           e.editor &&
             n
