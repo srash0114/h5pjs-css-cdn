@@ -4423,14 +4423,14 @@
                         ? this.interactions[this.nextInteractionToShow]
                         : null);
                         if (
-                            isIOS
-                        ) {
-                            if (video && video.webkitExitFullscreen) {
-                                video.webkitExitFullscreen();
-                                this.trigger("exitFullScreen");
-                                this.resizeInteractions();
-                            }
-                        }
+            isIOS
+        ) {
+            if (video && video.webkitExitFullscreen) {
+                video.webkitExitFullscreen();
+                this.trigger("exitFullScreen");
+                this.resizeInteractions();
+            }
+        }
           }
           this.accessibility.announceInteractions(e);
     }),
