@@ -4402,7 +4402,8 @@
         // Check if in fullscreen and on iOS, and exit fullscreen if an interactive question is about to be shown
         if (
             isIOS &&
-            void 0 !== this.nextInteractionToShow
+            void 0 === this.nextInteractionToShow && 
+            (this.nextInteractionToShow = this.findNextInteractionToShow(t))
         ) {
             if (video && video.webkitExitFullscreen) {
                 video.webkitExitFullscreen();
@@ -4412,14 +4413,14 @@
         }
 
         void 0 === this.nextInteractionToShow &&
-            (this.nextInteractionToShow = this.findNextInteractionToShow(t));
+          (this.nextInteractionToShow = this.findNextInteractionToShow(t));
         for (
-            var e = [],
-                o =
-                    void 0 !== this.nextInteractionToShow
-                        ? this.interactions[this.nextInteractionToShow]
-                        : null;
-            o && o.getDuration().from <= t;
+          var e = [],
+            o =
+              void 0 !== this.nextInteractionToShow
+                ? this.interactions[this.nextInteractionToShow]
+                : null;
+          o && o.getDuration().from <= t;
         ) {
             o.toggle(t),
                 o.repositionToWrapper(this.$videoWrapper),
