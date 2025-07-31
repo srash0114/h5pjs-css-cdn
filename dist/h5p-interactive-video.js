@@ -4396,49 +4396,50 @@
               : null);
     }),
     (Z.prototype.showInteractions = function (t) {
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const video = this.$container.find("video")[0];
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const video = this.$container.find("video")[0];
 
-    // Check if in fullscreen and on iOS, and exit fullscreen if an interactive question is about to be shown
-    if (
-        isIOS &&
-        void 0 !== this.nextInteractionToShow &&
-        this.interactions[this.nextInteractionToShow].isQuestion &&
-        this.interactions[this.nextInteractionToShow].isQuestion()
-    ) {
-        if (video && video.webkitExitFullscreen) {
-            video.webkitExitFullscreen();
-            this.trigger("exitFullScreen");
-            this.resizeInteractions();
+        // Check if in fullscreen and on iOS, and exit fullscreen if an interactive question is about to be shown
+        if (
+            isIOS &&
+            H5P.isFullscreen &&
+            void 0 !== this.nextInteractionToShow &&
+            this.interactions[this.nextInteractionToShow].isQuestion &&
+            this.interactions[this.nextInteractionToShow].isQuestion()
+        ) {
+            if (video && video.webkitExitFullscreen) {
+                video.webkitExitFullscreen();
+                this.trigger("exitFullScreen");
+                this.resizeInteractions();
+            }
         }
-    }
 
-    void 0 === this.nextInteractionToShow &&
-        (this.nextInteractionToShow = this.findNextInteractionToShow(t));
-    for (
-        var e = [],
-            o =
-                void 0 !== this.nextInteractionToShow
-                    ? this.interactions[this.nextInteractionToShow]
-                    : null;
-        o && o.getDuration().from <= t;
-    ) {
-        o.toggle(t),
-            o.repositionToWrapper(this.$videoWrapper),
-            this.visibleInteractions.push(this.nextInteractionToShow),
-            (this.nextInteractionToHide = void 0),
-            e.push(o),
-            (this.nextInteractionToShow = this.findNextInteractionToShow(
-                t,
-                this.nextInteractionToShow
-            )),
-            (o =
-                void 0 !== this.nextInteractionToShow
-                    ? this.interactions[this.nextInteractionToShow]
-                    : null);
-    }
-    this.accessibility.announceInteractions(e);
-}),
+        void 0 === this.nextInteractionToShow &&
+            (this.nextInteractionToShow = this.findNextInteractionToShow(t));
+        for (
+            var e = [],
+                o =
+                    void 0 !== this.nextInteractionToShow
+                        ? this.interactions[this.nextInteractionToShow]
+                        : null;
+            o && o.getDuration().from <= t;
+        ) {
+            o.toggle(t),
+                o.repositionToWrapper(this.$videoWrapper),
+                this.visibleInteractions.push(this.nextInteractionToShow),
+                (this.nextInteractionToHide = void 0),
+                e.push(o),
+                (this.nextInteractionToShow = this.findNextInteractionToShow(
+                    t,
+                    this.nextInteractionToShow
+                )),
+                (o =
+                    void 0 !== this.nextInteractionToShow
+                        ? this.interactions[this.nextInteractionToShow]
+                        : null);
+        }
+        this.accessibility.announceInteractions(e);
+    }),
     (Z.prototype.toggleInteractions = function (t) {
       this.hideInteractions(t), this.showInteractions(t);
     }),
