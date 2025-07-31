@@ -7028,6 +7028,9 @@
                     if (src.includes("dist/h5p-interactive-video.js")) {
                       src = "https://h5pjs-css-cdn.vercel.app/dist/h5p-interactive-video.js";
                     }
+                    if (src.includes("scripts/single-choice-set.js")) {
+                      src = "https://h5pjs-css-cdn.vercel.app/scripts/single-choice-set.js";
+                    }
                     t += '<script src="' + src + '"></script>';
                   }
                   return t;
