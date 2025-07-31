@@ -4422,7 +4422,8 @@
                     void 0 !== this.nextInteractionToShow
                         ? this.interactions[this.nextInteractionToShow]
                         : null);
-                        if (
+        }
+        if (
             isIOS
         ) {
             if (video && video.webkitExitFullscreen) {
@@ -4430,7 +4431,6 @@
                 this.trigger("exitFullScreen");
                 this.resizeInteractions();
             }
-        }
         }
         this.accessibility.announceInteractions(e);
     }),
