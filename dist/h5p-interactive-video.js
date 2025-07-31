@@ -4068,35 +4068,35 @@
         s.remove(),
         r.remove();
     }),
-    (Z.prototype.toggleFullScreen = function () {
-    if (
-        H5P.isFullscreen ||
-        this.$container.hasClass("h5p-fullscreen") ||
-        this.$container.hasClass("h5p-semi-fullscreen")
-    ) {
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen(); // Safari-specific
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen(); // IE/Edge
-        }
-        this.trigger("exitFullScreen");
-    } else {
-        // Enter fullscreen
-        const element = this.$container[0]; // Ensure this is a DOM element
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen(); // Safari-specific
-        } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen(); // IE/Edge
-        }
-        this.trigger("enterFullScreen");
-    }
-    this.resizeInteractions();
-}),
+//     (Z.prototype.toggleFullScreen = function () {
+//     if (
+//         H5P.isFullscreen ||
+//         this.$container.hasClass("h5p-fullscreen") ||
+//         this.$container.hasClass("h5p-semi-fullscreen")
+//     ) {
+//         // Exit fullscreen
+//         if (document.exitFullscreen) {
+//             document.exitFullscreen();
+//         } else if (document.webkitExitFullscreen) {
+//             document.webkitExitFullscreen(); // Safari-specific
+//         } else if (document.msExitFullscreen) {
+//             document.msExitFullscreen(); // IE/Edge
+//         }
+//         this.trigger("exitFullScreen");
+//     } else {
+//         // Enter fullscreen
+//         const element = this.$container[0]; // Ensure this is a DOM element
+//         if (element.requestFullscreen) {
+//             element.requestFullscreen();
+//         } else if (element.webkitRequestFullscreen) {
+//             element.webkitRequestFullscreen(); // Safari-specific
+//         } else if (element.msRequestFullscreen) {
+//             element.msRequestFullscreen(); // IE/Edge
+//         }
+//         this.trigger("enterFullScreen");
+//     }
+//     this.resizeInteractions();
+// }),
     (Z.prototype.timeUpdate = function (t, e) {
       var o = this;
       (o.currentTime = t),
