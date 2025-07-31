@@ -4395,33 +4395,50 @@
                 ]
               : null);
     }),
-    // (Z.prototype.showInteractions = function (t) {
-    //   void 0 === this.nextInteractionToShow &&
-    //     (this.nextInteractionToShow = this.findNextInteractionToShow(t));
-    //   for (
-    //     var e = [],
-    //       o =
-    //         void 0 !== this.nextInteractionToShow
-    //           ? this.interactions[this.nextInteractionToShow]
-    //           : null;
-    //     o && o.getDuration().from <= t;
+    (Z.prototype.showInteractions = function (t) {
+  void 0 === this.nextInteractionToShow &&
+    (this.nextInteractionToShow = this.findNextInteractionToShow(t));
 
-    //   )
-    //     o.toggle(t),
-    //       o.repositionToWrapper(this.$videoWrapper),
-    //       this.visibleInteractions.push(this.nextInteractionToShow),
-    //       (this.nextInteractionToHide = void 0),
-    //       e.push(o),
-    //       (this.nextInteractionToShow = this.findNextInteractionToShow(
-    //         t,
-    //         this.nextInteractionToShow
-    //       )),
-    //       (o =
-    //         void 0 !== this.nextInteractionToShow
-    //           ? this.interactions[this.nextInteractionToShow]
-    //           : null);
-    //   this.accessibility.announceInteractions(e);
-    // }),
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const video = this.$container.find("video")[0];
+
+  for (
+    var e = [],
+      o =
+        void 0 !== this.nextInteractionToShow
+          ? this.interactions[this.nextInteractionToShow]
+          : null;
+    o && o.getDuration().from <= t;
+
+  ) {
+    // ✅ Nếu là thiết bị iOS và đang fullscreen thì thoát trước khi hiện interaction
+    if (
+      isIOS &&
+      video &&
+      typeof video.webkitExitFullscreen === "function" &&
+      document.fullscreenElement === video // hoặc: document.webkitFullscreenElement === video
+    ) {
+      video.webkitExitFullscreen(); // Thoát fullscreen iOS
+    }
+
+    o.toggle(t);
+    o.repositionToWrapper(this.$videoWrapper);
+    this.visibleInteractions.push(this.nextInteractionToShow);
+    this.nextInteractionToHide = void 0;
+    e.push(o);
+
+    this.nextInteractionToShow = this.findNextInteractionToShow(
+      t,
+      this.nextInteractionToShow
+    );
+    o =
+      void 0 !== this.nextInteractionToShow
+        ? this.interactions[this.nextInteractionToShow]
+        : null;
+  }
+
+  this.accessibility.announceInteractions(e);
+}),
     (Z.prototype.toggleInteractions = function (t) {
       this.hideInteractions(t), this.showInteractions(t);
     }),
