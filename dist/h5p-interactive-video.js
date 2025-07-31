@@ -4396,49 +4396,74 @@
               : null);
     }),
     (Z.prototype.showInteractions = function (t) {
-  void 0 === this.nextInteractionToShow &&
-    (this.nextInteractionToShow = this.findNextInteractionToShow(t));
+    void 0 === this.nextInteractionToShow &&
+        (this.nextInteractionToShow = this.findNextInteractionToShow(t));
 
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const video = this.$container.find("video")[0];
-
-  for (
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const video = this.$container.find("video")[0];
     var e = [],
-      o =
+        o =
         void 0 !== this.nextInteractionToShow
-          ? this.interactions[this.nextInteractionToShow]
-          : null;
-    o && o.getDuration().from <= t;
+            ? this.interactions[this.nextInteractionToShow]
+            : null;
 
-  ) {
-    // ✅ Nếu là thiết bị iOS và đang fullscreen thì thoát trước khi hiện interaction
-    if (
-      isIOS &&
-      video &&
-      typeof video.webkitExitFullscreen === "function" &&
-      document.fullscreenElement === video // hoặc: document.webkitFullscreenElement === video
-    ) {
-      video.webkitExitFullscreen(); // Thoát fullscreen iOS
+    while (o && o.getDuration().from <= t) {
+        // Thoát fullscreen nếu interaction yêu cầu hoàn thành
+        if (o.getRequiresCompletion && o.getRequiresCompletion()) {
+        if (
+            H5P.isFullscreen ||
+            this.$container.hasClass("h5p-fullscreen") ||
+            this.$container.hasClass("h5p-semi-fullscreen")
+        ) {
+            if (
+            typeof H5P.exitFullScreen !== "undefined" &&
+            typeof H5P.fullScreenBrowserPrefix !== "undefined"
+            ) {
+            H5P.exitFullScreen();
+            } else {
+            if (typeof H5P.fullScreenBrowserPrefix === "undefined") {
+                if (!isIOS) {
+                H5P.jQuery(".h5p-disable-fullscreen").click();
+                }
+            } else if (H5P.fullScreenBrowserPrefix === "") {
+                window.top.document.exitFullscreen();
+            } else if (H5P.fullScreenBrowserPrefix === "ms") {
+                window.top.document.msExitFullscreen();
+            } else if (
+                isIOS &&
+                video &&
+                typeof video.webkitExitFullscreen === "function"
+            ) {
+                video.webkitExitFullscreen();
+            } else {
+                window.top.document[
+                H5P.fullScreenBrowserPrefix + "CancelFullScreen"
+                ]();
+            }
+            }
+
+            if (typeof this.trigger === "function") {
+            this.trigger("exitFullScreen");
+            }
+        }
+        }
+
+        o.toggle(t),
+        o.repositionToWrapper(this.$videoWrapper),
+        this.visibleInteractions.push(this.nextInteractionToShow),
+        (this.nextInteractionToHide = void 0),
+        e.push(o),
+        (this.nextInteractionToShow = this.findNextInteractionToShow(
+            t,
+            this.nextInteractionToShow
+        )),
+        (o =
+            void 0 !== this.nextInteractionToShow
+            ? this.interactions[this.nextInteractionToShow]
+            : null);
     }
-
-    o.toggle(t);
-    o.repositionToWrapper(this.$videoWrapper);
-    this.visibleInteractions.push(this.nextInteractionToShow);
-    this.nextInteractionToHide = void 0;
-    e.push(o);
-
-    this.nextInteractionToShow = this.findNextInteractionToShow(
-      t,
-      this.nextInteractionToShow
-    );
-    o =
-      void 0 !== this.nextInteractionToShow
-        ? this.interactions[this.nextInteractionToShow]
-        : null;
-  }
-
-  this.accessibility.announceInteractions(e);
-}),
+    this.accessibility.announceInteractions(e);
+    }),
     (Z.prototype.toggleInteractions = function (t) {
       this.hideInteractions(t), this.showInteractions(t);
     }),
