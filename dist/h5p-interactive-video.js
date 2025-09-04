@@ -4447,7 +4447,7 @@
                           console.log('Auto click H5P button trên iOS sau 1s:', iosBtns[0]);
                           iosBtns[0].click();
                         }
-                      }, 500);           
+                      }, 800);           
                     }
                     else{
                       const btns = document.querySelectorAll('.h5p-touch-area, .h5p-interaction-button');
