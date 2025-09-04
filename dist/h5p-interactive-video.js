@@ -4435,7 +4435,7 @@
                         ? this.interactions[this.nextInteractionToShow]
                         : null);
                         const btn = o && o.getElement()
-                          ? o.getElement().querySelector(".h5p-interaction-button")
+                          ? o.getElement().querySelector(".h5p-touch-area")
                           : null;
 
                         if (btn) {
