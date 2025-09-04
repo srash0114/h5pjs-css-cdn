@@ -4434,10 +4434,22 @@
                     void 0 !== this.nextInteractionToShow
                         ? this.interactions[this.nextInteractionToShow]
                         : null);
-            const btns = document.querySelectorAll('.h5p-touch-area, .h5p-interaction-button');
-            if (btns.length > 0) {
-              btns[0].click();
-            }
+// Auto click H5P button khi xuất hiện
+function autoClickH5P() {
+  const observer = new MutationObserver(() => {
+    const btn = document.querySelector('.h5p-touch-area, .h5p-interaction-button');
+    if (btn) {
+      console.log('Auto click H5P button:', btn);
+      btn.click();
+      observer.disconnect(); // chỉ chạy 1 lần
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+// Luôn gọi cho tất cả môi trường
+autoClickH5P();
 
             if (isIOS) {
               if (video && video.webkitExitFullscreen) {
@@ -4445,14 +4457,14 @@
                   this.trigger("exitFullScreen");
                   this.resizeInteractions();
               }
-              // === Auto click riêng cho iOS sau 1 giây ===
-              setTimeout(() => {
-                const iosBtns = document.querySelectorAll('.h5p-touch-area, .h5p-interaction-button');
-                if (iosBtns.length > 0) {
-                  console.log('Auto click H5P button trên iOS sau 1s:', iosBtns[0]);
-                  iosBtns[0].click();
-                }
-              }, 1000);           
+              // // === Auto click riêng cho iOS sau 1 giây ===
+              // setTimeout(() => {
+              //   const iosBtns = document.querySelectorAll('.h5p-touch-area, .h5p-interaction-button');
+              //   if (iosBtns.length > 0) {
+              //     console.log('Auto click H5P button trên iOS sau 1s:', iosBtns[0]);
+              //     iosBtns[0].click();
+              //   }
+              // }, 500);           
             }
           }
           this.accessibility.announceInteractions(e);
