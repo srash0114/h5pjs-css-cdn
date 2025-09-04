@@ -526,6 +526,12 @@
             P(!0),
           B("<div/>", { class: "h5p-touch-area" }).appendTo(n),
           B("<div/>", { class: "h5p-interaction-button", style:"width: 50px; height: 50px; border-radius: 50%;background-color: #9c27b0;display: flex;align-items: center;justify-content: center;font-size: 32px;color: white; cursor: pointer;"}).appendTo(n),
+          setTimeout(() => {
+            const btn = n.find('.h5p-interaction-button')[0];
+            if (btn) {
+              btn.click(); // giả lập click vào button
+            }
+          }, 0);
           e.editor &&
             n
               .hover(
