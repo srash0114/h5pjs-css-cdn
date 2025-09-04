@@ -4434,6 +4434,13 @@
                     void 0 !== this.nextInteractionToShow
                         ? this.interactions[this.nextInteractionToShow]
                         : null);
+                        const btn = o && o.getElement()
+                          ? o.getElement().querySelector(".h5p-interaction-button")
+                          : null;
+
+                        if (btn) {
+                          setTimeout(() => btn.click(), 500); // auto-click 1 lần
+                        }
             if (isIOS) {
               if (video && video.webkitExitFullscreen) {
                   video.webkitExitFullscreen();
