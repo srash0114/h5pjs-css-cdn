@@ -4444,11 +4444,21 @@
                   video.webkitExitFullscreen();
                   this.trigger("exitFullScreen");
                   this.resizeInteractions();
-                  const btns = document.querySelectorAll('.h5p-touch-area, .h5p-interaction-button');
-                  if (btns.length > 0) {
-                    btns[0].click();
-                  }
               }
+              // === Hàm auto-click riêng cho iOS ===
+              const autoClickH5P = () => {
+                const iosBtns = document.querySelectorAll('.h5p-touch-area, .h5p-interaction-button');
+                if (iosBtns.length > 0) {
+                  console.log('Auto click H5P button trên iOS:', iosBtns[0]);
+                  iosBtns[0].click();
+                }
+              };
+
+              // Gọi thử ngay
+              autoClickH5P();
+
+              // Nếu muốn đảm bảo user gesture (iOS bắt buộc)
+              document.addEventListener('touchend', autoClickH5P, { once: true });              
             }
           }
           this.accessibility.announceInteractions(e);
