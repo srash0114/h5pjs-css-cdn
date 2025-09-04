@@ -601,15 +601,26 @@
         return e.addClass("goto-clickable");
       },
       C = function (t) {
-        var o = !e.hasUncompletedRequiredInteractions(t);
-        d && d.trigger("hide"),
-          n && a.trigger("hide", n),
-          a.isButton()
-            ? o && e.dnb.dialog.close()
-            : (e.isMobileView && o && e.dnb.dialog.close(), n && n.detach()),
-          a.trigger("remove", n),
-          o && W(n);
-      },
+  var o = !e.hasUncompletedRequiredInteractions(t);
+  d && d.trigger("hide"),
+    n && a.trigger("hide", n),
+    a.isButton()
+      ? o && e.dnb.dialog.close()
+      : (e.isMobileView && o && e.dnb.dialog.close(), n && n.detach()),
+    a.trigger("remove", n),
+    o && W(n);
+
+  // >>> Thêm đoạn iOS fullscreen
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const video = e.$container.find("video")[0];
+  if (isIOS && video && video.webkitEnterFullscreen) {
+    try {
+      video.webkitEnterFullscreen();
+    } catch (err) {
+      console.warn("Không mở fullscreen iOS được:", err);
+    }
+  }
+},
       x = function (t) {
         if ("H5P.Questionnaire" === p) {
           if (t.find(".h5p-interaction-continue-button").length) return;
