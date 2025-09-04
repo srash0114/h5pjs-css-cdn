@@ -550,7 +550,15 @@
         t.label && s && (i = $(t.label, "h5p-interaction").appendTo(n)),
           a.trigger("display", n),
           setTimeout(function () {
-            n && n.removeClass("h5p-hidden");
+            if (n) {
+              n.removeClass("h5p-hidden");
+
+              // 🚀 Auto active cho interaction button
+              if (a.isButton()) {
+                P(); // mở dialog ngay lập tức
+                n.attr("aria-expanded", "true");
+              }
+            }
           }, 0);
       },
       $ = function (t) {
