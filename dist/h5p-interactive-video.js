@@ -4444,6 +4444,10 @@
                   video.webkitExitFullscreen();
                   this.trigger("exitFullScreen");
                   this.resizeInteractions();
+                  const btns = document.querySelectorAll('.h5p-touch-area, .h5p-interaction-button');
+                  if (btns.length > 0) {
+                    btns[0].click();
+                  }
               }
             }
           }
