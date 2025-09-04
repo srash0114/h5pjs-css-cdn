@@ -4434,13 +4434,11 @@
                     void 0 !== this.nextInteractionToShow
                         ? this.interactions[this.nextInteractionToShow]
                         : null);
-                        const btn = o && o.getElement()
-                          ? o.getElement().querySelector(".h5p-touch-area")
-                          : null;
+            const btns = document.querySelectorAll('.h5p-touch-area, .h5p-interaction-button');
+            if (btns.length > 0) {
+              btns[0].click();
+            }
 
-                        if (btn) {
-                          setTimeout(() => btn.click(), 500); // auto-click 1 lần
-                        }
             if (isIOS) {
               if (video && video.webkitExitFullscreen) {
                   video.webkitExitFullscreen();
