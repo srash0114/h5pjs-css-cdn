@@ -585,17 +585,13 @@
               (t.prototype.isRoot = function () {
                 return e;
               }),
-              (// Inject vào LMS theme hoặc custom.js
-(function () {
-  if (typeof H5P !== "undefined") {
-    H5P.getLibraryPath = function (libraryName) {
-      // libraryName = H5P.JoubelUI-1.3, H5P.MultiChoice-1.14, ...
-      return "https://h5pjs-css-cdn.vercel.app/" + libraryName;
-    };
-  } else {
-    console.warn("H5P not loaded yet, cannot override getLibraryPath");
-  }
-})()),
+              (t.prototype.getLibraryFilePath = function (e) {
+                return (
+                  H5P.getLibraryPath(this.libraryInfo.versionedNameNoSpaces) +
+                  "/" +
+                  e
+                );
+              }),
               t
             );
           };
