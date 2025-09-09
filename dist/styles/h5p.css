@@ -621,3 +621,15 @@ iframe.h5peditor-semi-fullscreen {
     transform: rotate(360deg);
   }
 }
+
+button.h5p-question-show-solution.h5p-joubelui-button {
+    font-family: 'sans-serif';
+}
+
+button.h5p-question-try-again.h5p-joubelui-button {
+    font-family: 'sans-serif';
+}
+
+button.h5p-question-iv-continue.h5p-joubelui-button {
+    font-family: 'sans-serif';
+}
