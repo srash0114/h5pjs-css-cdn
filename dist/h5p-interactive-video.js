@@ -4571,29 +4571,24 @@
     }),
     (Z.prototype.isSkippingProhibited = function (t = 0) {
   try {
-    // Bắt unitId từ URL iframe
     const match = window.location.pathname.match(
       /block-v1:[^/]+type@vertical\+block@[A-Za-z0-9_-]+/
     );
     const unitId = match ? match[0] : null;
 
-    // Lấy thông tin từ sessionStorage
-    const raw = unitId ? sessionStorage.getItem(`unitStatus:${unitId}`) : null;
+    // Lấy từ localStorage (chung domain)
+    const raw = unitId ? localStorage.getItem(`unitStatus:${unitId}`) : null;
     const unitInfo = raw ? JSON.parse(raw) : null;
 
     console.log("Check skipping:", { unitId, unitInfo, t });
 
-    // Nếu chưa có data → cấm skip
-    if (!unitInfo) return true;
+    if (!unitInfo) return true;          // chưa có data → cấm skip
+    if (unitInfo.complete !== true) return true; // chưa complete → cấm skip
 
-    // Nếu chưa complete → cấm skip
-    if (unitInfo.complete !== true) return true;
-
-    // Nếu đã complete → cho skip thoải mái
-    return false;
+    return false; // đã complete → cho skip
   } catch (e) {
     console.error("Lỗi khi kiểm tra skipping:", e);
-    return true; // fallback: cấm skip khi có lỗi
+    return true; // fallback: cấm skip
   }
 }),
     (Z.SEEKING = 4),
