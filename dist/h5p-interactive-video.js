@@ -4569,15 +4569,23 @@
         e
       );
     }),
-    (Z.prototype.isSkippingProhibited = function () {
-      var t =
-        arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
-      return (
-        !this.editor &&
-        ("both" === this.preventSkippingMode ||
-          ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
-      );
-    }),
+    (Z.prototype.isSkippingProhibited = function (t = 0) {
+      function isCurrentUnitComplete() {
+  const currentUrl = window.location.pathname;
+  const unitLink = document.querySelector(`a[title="Unit"][href="${currentUrl}"]`);
+  return unitLink && unitLink.classList.contains("complete");
+}
+  // === Thêm điều kiện check Unit ===
+  if (!isCurrentUnitComplete()) {
+    return true; // luôn chặn tua nếu Unit chưa complete
+  }
+
+  return (
+    !this.editor &&
+    ("both" === this.preventSkippingMode ||
+      ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
+  );
+}),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
     (Z.ATTACHED = 6),
