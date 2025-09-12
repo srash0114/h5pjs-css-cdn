@@ -4570,26 +4570,16 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function (t = 0) {
-  try {
-    const match = window.location.pathname.match(
-      /block-v1:[^/]+type@vertical\+block@[A-Za-z0-9_-]+/
-    );
-    const unitId = match ? match[0] : null;
+  const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9_-]+/);
+  const unitId = match ? match[0] : null;
+  const unitInfo = window.__UNIT_STATUS__?.[unitId];
 
-    // Lấy từ localStorage (chung domain)
-    const raw = unitId ? localStorage.getItem(`unitStatus:${unitId}`) : null;
-    const unitInfo = raw ? JSON.parse(raw) : null;
+  console.log("Check skipping:", { unitId, unitInfo, t });
 
-    console.log("Check skipping:", { unitId, unitInfo, t });
+  if (!unitInfo) return true;        // chưa có data → cấm
+  if (!unitInfo.complete) return true; // chưa complete → cấm
 
-    if (!unitInfo) return true;          // chưa có data → cấm skip
-    if (unitInfo.complete !== true) return true; // chưa complete → cấm skip
-
-    return false; // đã complete → cho skip
-  } catch (e) {
-    console.error("Lỗi khi kiểm tra skipping:", e);
-    return true; // fallback: cấm skip
-  }
+  return false; // complete → cho skip
 }),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
