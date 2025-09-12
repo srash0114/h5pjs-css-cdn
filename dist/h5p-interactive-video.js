@@ -4576,13 +4576,13 @@
     const unitId = match ? match[0] : null;
 
     // Lấy trạng thái unit từ parent
-    const unitInfo = unitId ? window.parent.unitStatus?.[unitId] : null;
+    const unitInfo = unitId ? window.unitStatus?.[unitId] : null;
 
     // Debug
     console.log("Check skipping:", { unitId, unitInfo, t });
 
     // ✅ Nếu unit chưa complete thì cấm skip
-    if (unitInfo.complete !== true) {
+    if (!unitInfo || unitInfo.complete !== true) {
       return true; // luôn cấm
     }
 
