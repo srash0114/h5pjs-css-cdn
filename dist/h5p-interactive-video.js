@@ -4570,24 +4570,30 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function (t = 0) {
-  function isCurrentUnitComplete() {
-    try {
-      // Lấy URL hiện tại trong iframe
-      const currentUrl = window.location.pathname;
+function isCurrentUnitComplete() {
+  try {
+    // Lấy vertical block id trong iframe URL
+    const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9]+/);
+    if (!match) return false;
 
-      // Tìm trong parent (LMS outline)
-      const unitLink = window.parent.document.querySelector(
-        `a[title="Unit"][href="${currentUrl}"]`
-      );
-      console.log("currentUrl:", currentUrl);
-      console.log("Unit ngoài LMS:", unitLink);
+    const verticalId = match[0];
+    console.log("Vertical ID:", verticalId);
 
-      return unitLink && unitLink.classList.contains("complete");
-    } catch (e) {
-      console.error("Không truy cập được parent DOM:", e);
-      return false;
+    // Tìm tất cả unit ngoài LMS
+    const unitLinks = window.parent.document.querySelectorAll('a[title="Unit"]');
+    for (const link of unitLinks) {
+      if (link.getAttribute("href").includes(verticalId)) {
+        console.log("So khớp với link:", link.href);
+        return link.classList.contains("complete");
+      }
     }
+    return false;
+  } catch (e) {
+    console.error("Không truy cập được parent DOM:", e);
+    return false;
   }
+}
+
 
   // === Nếu unit chưa complete thì chặn tua ===
   if (!isCurrentUnitComplete()) {
