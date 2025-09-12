@@ -4570,39 +4570,34 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function (t = 0) {
-function isCurrentUnitPlayable() {
   try {
-    // Lấy vertical block id từ URL trong iframe (bỏ prefix /xblock/)
-    const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9]+/);
-    if (!match) return false;
+    // Lấy unitId hiện tại từ URL iframe
+    const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9_-]+/);
+    const unitId = match ? match[0] : null;
 
-    const unitId = match[0]; // chỉ giữ block-v1:...vertical+block@xxx
-    console.log("UnitId trong iframe:", unitId);
+    // Nếu lấy được unitId thì check status từ parent
+    const unitInfo = unitId ? window.parent.unitStatus?.[unitId] : null;
 
-    // Lấy thông tin từ LMS
-    const unitInfo = window.parent.unitStatus?.[unitId];
-    console.log("Unit info từ parent:", unitId, unitInfo);
+    // ✅ Nếu unit đã pass (complete = true) thì cho phép tua thoải mái
+    if (unitInfo?.complete === true) {
+      return false; // không cấm skip
+    }
 
-    // ✅ Chỉ cho phép khi vừa active vừa complete
-    return unitInfo?.active === true && unitInfo?.complete === true;
+    // Ngược lại → dùng logic gốc
+    return (
+      !this.editor &&
+      (
+        this.preventSkippingMode === "both" ||
+        (
+          this.preventSkippingMode !== "none" &&
+          this.maxTimeReached < t
+        )
+      )
+    );
   } catch (e) {
-    console.error("Không lấy được unitStatus từ parent:", e);
-    return false;
+    console.error("Lỗi khi kiểm tra skipping:", e);
+    return false; // fallback cho phép skip nếu lỗi
   }
-}
-
-
-  // Nếu unit chưa active hoặc chưa complete → cấm tua
-  if (!isCurrentUnitPlayable()) {
-    return true;
-  }
-
-  // === Logic gốc của H5P ===
-  return (
-    !this.editor &&
-    ("both" === this.preventSkippingMode ||
-      ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
-  );
 }),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
