@@ -1,17 +1,5 @@
 (() => {
   "use strict";
-  // Nhận message từ parent
-  window.addEventListener("message", (event) => {
-    if (event.data?.type === "UNIT_STATUS_UPDATE") {
-      const { unitId, ...data } = event.data.data;
-      try {
-        localStorage.setItem(`unitStatus:${unitId}`, JSON.stringify(data));
-        console.log("📥 Received UNIT_STATUS_UPDATE:", unitId, data);
-      } catch (err) {
-        console.warn("❌ Lưu unitStatus thất bại:", err);
-      }
-    }
-  });
   const t = function (t) {
       const e = t.length;
       return function o() {
@@ -4581,31 +4569,41 @@
         e
       );
     }),
-    (
-    Z.prototype.isSkippingProhibited = function (t = 0) {
+    (  window.addEventListener("message", (event) => {
+    if (event.data?.type === "UNIT_STATUS_UPDATE") {
+      const { unitId, ...data } = event.data.data;
       try {
-        const match = window.location.pathname.match(
-          /block-v1:[^/]+type@vertical\+block@[A-Za-z0-9_-]+/
-        );
-        const unitId = match ? match[0] : null;
-
-        let unitInfo = null;
-        if (unitId) {
-          const raw = localStorage.getItem(`unitStatus:${unitId}`);
-          unitInfo = raw ? JSON.parse(raw) : null;
-        }
-
-        console.log("Check skipping:", { unitId, unitInfo, t });
-
-        if (!unitInfo) return true;             // chưa có data → cấm skip
-        if (unitInfo.complete !== true) return true; // chưa complete → cấm skip
-
-        return false; // complete → cho skip
-      } catch (e) {
-        console.error("Lỗi khi kiểm tra skipping:", e);
-        return true;
+        localStorage.setItem(`unitStatus:${unitId}`, JSON.stringify(data));
+        console.log("📥 Received UNIT_STATUS_UPDATE:", unitId, data);
+      } catch (err) {
+        console.warn("❌ Lưu unitStatus thất bại:", err);
       }
-    }),
+    }
+  }),
+  Z.prototype.isSkippingProhibited = function (t = 0) {
+    try {
+      const match = window.location.pathname.match(
+        /block-v1:[^/]+type@vertical\+block@[A-Za-z0-9_-]+/
+      );
+      const unitId = match ? match[0] : null;
+
+      let unitInfo = null;
+      if (unitId) {
+        const raw = localStorage.getItem(`unitStatus:${unitId}`);
+        unitInfo = raw ? JSON.parse(raw) : null;
+      }
+
+      console.log("Check skipping:", { unitId, unitInfo, t });
+
+      if (!unitInfo) return true;             // chưa có data → cấm skip
+      if (unitInfo.complete !== true) return true; // chưa complete → cấm skip
+
+      return false; // complete → cho skip
+    } catch (e) {
+      console.error("Lỗi khi kiểm tra skipping:", e);
+      return true;
+    }
+  }),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
     (Z.ATTACHED = 6),
