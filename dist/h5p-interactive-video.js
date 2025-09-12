@@ -4570,25 +4570,27 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function (t = 0) {
-  function isCurrentUnitPlayable() {
-    try {
-      // Lấy vertical block id từ URL iframe
-      const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9]+/);
-      if (!match) return false;
+function isCurrentUnitPlayable() {
+  try {
+    // Lấy vertical block id từ URL trong iframe (bỏ prefix /xblock/)
+    const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9]+/);
+    if (!match) return false;
 
-      const unitId = match[0];
+    const unitId = match[0]; // chỉ giữ block-v1:...vertical+block@xxx
+    console.log("UnitId trong iframe:", unitId);
 
-      // Lấy thông tin unit từ LMS
-      const unitInfo = window.parent.unitStatus?.[unitId];
-      console.log("Unit info từ parent:", unitId, unitInfo);
+    // Lấy thông tin từ LMS
+    const unitInfo = window.parent.unitStatus?.[unitId];
+    console.log("Unit info từ parent:", unitId, unitInfo);
 
-      // ✅ Chỉ cho phép khi vừa active vừa complete
-      return unitInfo?.active === true && unitInfo?.complete === true;
-    } catch (e) {
-      console.error("Không lấy được unitStatus từ parent:", e);
-      return false;
-    }
+    // ✅ Chỉ cho phép khi vừa active vừa complete
+    return unitInfo?.active === true && unitInfo?.complete === true;
+  } catch (e) {
+    console.error("Không lấy được unitStatus từ parent:", e);
+    return false;
   }
+}
+
 
   // Nếu unit chưa active hoặc chưa complete → cấm tua
   if (!isCurrentUnitPlayable()) {
