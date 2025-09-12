@@ -4570,16 +4570,25 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function (t = 0) {
-  const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9_-]+/);
-  const unitId = match ? match[0] : null;
-  const unitInfo = window.__UNIT_STATUS__?.[unitId];
+  try {
+    const match = window.location.pathname.match(
+      /block-v1:[^/]+type@vertical\+block@[A-Za-z0-9_-]+/
+    );
+    const unitId = match ? match[0] : null;
 
-  console.log("Check skipping:", { unitId, unitInfo, t });
+    // 🔑 đọc từ parent thay vì window local
+    const unitInfo = unitId ? window.parent.__UNIT_STATUS__?.[unitId] : null;
 
-  if (!unitInfo) return true;        // chưa có data → cấm
-  if (!unitInfo.complete) return true; // chưa complete → cấm
+    console.log("Check skipping:", { unitId, unitInfo, t });
 
-  return false; // complete → cho skip
+    if (!unitInfo) return true;           // chưa có data → cấm skip
+    if (unitInfo.complete !== true) return true; // chưa complete → cấm skip
+
+    return false; // complete → cho skip
+  } catch (e) {
+    console.error("Lỗi khi kiểm tra skipping:", e);
+    return true;
+  }
 }),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
