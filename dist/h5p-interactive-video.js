@@ -4571,32 +4571,26 @@
     }),
     (Z.prototype.isSkippingProhibited = function (t = 0) {
   try {
-    // Lấy unitId hiện tại từ URL iframe
+    // Lấy unitId hiện tại
     const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9_-]+/);
     const unitId = match ? match[0] : null;
 
-    // Nếu lấy được unitId thì check status từ parent
+    // Lấy trạng thái unit từ parent
     const unitInfo = unitId ? window.parent.unitStatus?.[unitId] : null;
 
-    // ✅ Nếu unit đã pass (complete = true) thì cho phép tua thoải mái
-    if (unitInfo?.complete === true) {
-      return false; // không cấm skip
+    // Debug
+    console.log("Check skipping:", { unitId, unitInfo, t });
+
+    // ✅ Nếu unit chưa complete thì cấm skip
+    if (!unitInfo || unitInfo.complete !== true) {
+      return true; // luôn cấm
     }
 
-    // Ngược lại → dùng logic gốc
-    return (
-      !this.editor &&
-      (
-        this.preventSkippingMode === "both" ||
-        (
-          this.preventSkippingMode !== "none" &&
-          this.maxTimeReached < t
-        )
-      )
-    );
+    // ✅ Nếu unit complete rồi thì cho skip thoải mái
+    return false;
   } catch (e) {
     console.error("Lỗi khi kiểm tra skipping:", e);
-    return false; // fallback cho phép skip nếu lỗi
+    return true; // fallback: cấm skip nếu có lỗi
   }
 }),
     (Z.SEEKING = 4),
