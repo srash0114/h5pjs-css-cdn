@@ -4569,15 +4569,38 @@
         e
       );
     }),
-    (Z.prototype.isSkippingProhibited = function () {
-      var t =
-        arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
-      return (
-        !this.editor &&
-        ("both" === this.preventSkippingMode ||
-          ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
-      );
-    }),
+    (Z.prototype.isSkippingProhibited = function (t = 0) {
+  function isCurrentUnitComplete() {
+    try {
+      // Lấy vertical block id từ URL của iframe
+      const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9]+/);
+      if (!match) return false;
+
+      const unitId = match[0];
+
+      // Đọc trạng thái từ LMS (UnitButton export vào window.unitStatus)
+      const unitInfo = window.parent.unitStatus?.[unitId];
+      console.log("Unit info từ parent:", unitInfo);
+
+      return unitInfo?.complete === true;
+    } catch (e) {
+      console.error("Không lấy được unitStatus từ parent:", e);
+      return false;
+    }
+  }
+
+  // Nếu unit chưa complete thì chặn tua
+  if (!isCurrentUnitComplete()) {
+    return true;
+  }
+
+  // === Logic gốc của H5P ===
+  return (
+    !this.editor &&
+    ("both" === this.preventSkippingMode ||
+      ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
+  );
+}),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
     (Z.ATTACHED = 6),
