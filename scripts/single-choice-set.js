@@ -383,7 +383,8 @@ H5P.SingleChoiceSet = (function ($, UI, Question, SingleChoice, SolutionView, Re
 
     if (score === self.options.choices.length) {
       self.hideButton('try-again');
-      self.hideButton('show-solution');
+      // self.hideButton('show-solution');
+      self.showButton('show-solution');
     }
     else {
       self.showButton('try-again');

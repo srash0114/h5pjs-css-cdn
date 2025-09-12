@@ -919,7 +919,7 @@
             .showButton("iv-adaptivity-" + r, 1)
             .hideButton("iv-adaptivity-" + (i ? "wrong" : "correct"), 1)
             .hideButton("check-answer", 1)
-            .hideButton("show-solution", 1)
+            // .hideButton("show-solution", 1)
             .hideButton("try-again", 1),
             void 0 !== d.disableInput &&
               (d.disableInput instanceof Function ||
