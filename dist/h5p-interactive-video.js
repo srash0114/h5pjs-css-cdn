@@ -4583,7 +4583,7 @@
 
     // ✅ Nếu unit chưa complete thì cấm skip
     if (!unitInfo || unitInfo.complete !== true) {
-      return true; // luôn cấm
+      return false; // luôn cấm
     }
 
     // ✅ Nếu unit complete rồi thì cho skip thoải mái
