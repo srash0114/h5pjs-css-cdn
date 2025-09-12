@@ -4570,16 +4570,31 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function (t = 0) {
-      function isCurrentUnitComplete() {
-  const currentUrl = window.location.pathname;
-  const unitLink = document.querySelector(`a[title="Unit"][href="${currentUrl}"]`);
-  return unitLink && unitLink.classList.contains("complete");
-}
-  // === Thêm điều kiện check Unit ===
-  if (!isCurrentUnitComplete()) {
-    return true; // luôn chặn tua nếu Unit chưa complete
+  function isCurrentUnitComplete() {
+    try {
+      // Lấy URL hiện tại trong iframe
+      const currentUrl = window.location.pathname;
+
+      // Tìm trong parent (LMS outline)
+      const unitLink = window.parent.document.querySelector(
+        `a[title="Unit"][href="${currentUrl}"]`
+      );
+
+      console.log("Unit ngoài LMS:", unitLink);
+
+      return unitLink && unitLink.classList.contains("complete");
+    } catch (e) {
+      console.error("Không truy cập được parent DOM:", e);
+      return false;
+    }
   }
 
+  // === Nếu unit chưa complete thì chặn tua ===
+  if (!isCurrentUnitComplete()) {
+    return true;
+  }
+
+  // === Logic gốc của H5P ===
   return (
     !this.editor &&
     ("both" === this.preventSkippingMode ||
