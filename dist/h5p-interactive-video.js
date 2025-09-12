@@ -4579,7 +4579,7 @@
       const unitLink = window.parent.document.querySelector(
         `a[title="Unit"][href="${currentUrl}"]`
       );
-
+      console.log("currentUrl:", currentUrl);
       console.log("Unit ngoài LMS:", unitLink);
 
       return unitLink && unitLink.classList.contains("complete");
