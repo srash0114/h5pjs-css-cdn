@@ -4569,44 +4569,15 @@
         e
       );
     }),
-    (Z.prototype.isSkippingProhibited = function (t = 0) {
-  function isCurrentUnitComplete() {
-    try {
-      // Lấy vertical block id trong iframe URL
-      const match = window.location.pathname.match(/block-v1:[^/]+type@vertical\+block@[A-Za-z0-9]+/);
-      if (!match) return false;
-
-      const verticalId = match[0];
-      console.log("Vertical ID:", verticalId);
-
-      // Tìm tất cả unit link ngoài LMS
-      const unitLinks = window.parent.document.querySelectorAll('a[title="Unit"]');
-      for (const link of unitLinks) {
-        const href = link.getAttribute("href");
-        if (href && href.includes(verticalId)) {
-          console.log("So khớp với link:", href);
-          return link.classList.contains("complete");
-        }
-      }
-      return false;
-    } catch (e) {
-      console.error("Không truy cập được parent DOM:", e);
-      return false;
-    }
-  }
-
-  // Nếu unit chưa complete thì chặn tua
-  if (!isCurrentUnitComplete()) {
-    return true;
-  }
-
-  // Logic gốc H5P
-  return (
-    !this.editor &&
-    ("both" === this.preventSkippingMode ||
-      ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
-  );
-}),
+    (Z.prototype.isSkippingProhibited = function () {
+      var t =
+        arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
+      return (
+        !this.editor &&
+        ("both" === this.preventSkippingMode ||
+          ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
+      );
+    }),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
     (Z.ATTACHED = 6),
