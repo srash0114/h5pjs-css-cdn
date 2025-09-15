@@ -4572,7 +4572,7 @@
     (Z.prototype.isSkippingProhibited = function () {
       const CurrentUrl = window.location.href;
       const parts = CurrentUrl.split("/").fillter(Boolean);
-      CourseId = parts[3];
+      const CourseId = parts[3];
       const sequenceId = url.searchParams.get("sequence_id");
       console.log("Current URL...", CurrentUrl);
       console.log("sequence_id...", sequenceId);
