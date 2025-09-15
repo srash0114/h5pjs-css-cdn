@@ -4570,6 +4570,21 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function () {
+      function getIdsFromCurrentUrl() {
+        const parts = window.location.pathname.split('/').filter(Boolean);
+        // URL dạng: /learning/course/<courseId>/<sequenceId>/<unitId>
+        const courseId = decodeURIComponent(parts[4]);
+        const sequenceId = decodeURIComponent(parts[5]);
+        const unitId = decodeURIComponent(parts[6]);
+        return { courseId, sequenceId, unitId };
+      }
+
+      // Gọi thử
+      const { courseId, sequenceId, unitId } = getIdsFromCurrentUrl();
+      console.log("courseId:", courseId);
+      console.log("sequenceId:", sequenceId);
+      console.log("unitId:", unitId);
+
       window.getUnitStatus(sequenceId, unitId).then(isComplete => {
         console.log("Unit complete:", isComplete);
       });
