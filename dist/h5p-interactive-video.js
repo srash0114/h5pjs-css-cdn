@@ -4572,30 +4572,45 @@
     (Z.prototype.isSkippingProhibited = function () {
   const CurrentUrl = window.location.href;
   const parts = CurrentUrl.split("/").filter(Boolean);
-  const CourseId = parts[5];
+  const CourseId = parts[5]; // id block cần kiểm tra
   const url = new URL(CurrentUrl);
   let sequenceId = url.searchParams.get("sequence_id");
+
+  if (!sequenceId) {
+    console.warn("Không tìm thấy sequence_id trong URL");
+    return true; // chặn luôn
+  }
+
+  // fix lỗi khoảng trắng
   sequenceId = sequenceId.replace(/ /g, "+");
+
   console.log("Current URL...", CurrentUrl);
   console.log("sequence_id...", sequenceId);
   console.log("CourseId...", CourseId);
 
+  // Trả về promise để xử lý async
   return fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
     method: "GET",
-    credentials: "include" // gửi cookie kèm theo
+    credentials: "include", // gửi cookie kèm theo
   })
     .then(res => res.json())
     .then(data => {
       console.log("Data:", data);
 
-      // kiểm tra items
-      const allComplete = data.items.every(item => item.complete === true);
+      // tìm item có id = CourseId
+      const matchedItem = data.items.find(item => item.id === CourseId);
 
-      if (!allComplete) {
-        return null; // nếu có item chưa complete thì return null
+      if (!matchedItem) {
+        console.warn("Không tìm thấy item với id:", CourseId);
+        return true; // chặn
       }
 
-      // logic gốc
+      if (matchedItem.complete !== true) {
+        console.warn("Item chưa complete:", matchedItem);
+        return true; // chặn
+      }
+
+      // nếu item tồn tại và complete = true thì thực hiện logic gốc
       var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
       return (
         !this.editor &&
@@ -4605,7 +4620,7 @@
     })
     .catch(err => {
       console.error("Error:", err);
-      return null; // lỗi API thì coi như null
+      return true; // chặn nếu lỗi
     });
 }),
     (Z.SEEKING = 4),
