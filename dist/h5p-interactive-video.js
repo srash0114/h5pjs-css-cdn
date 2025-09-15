@@ -4579,15 +4579,15 @@
 
   if (!sequenceId) {
     console.warn("Không tìm thấy sequence_id trong URL");
-    return true; // chặn luôn
+    return false; // chặn luôn
   }
 
   // fix lỗi khoảng trắng
   sequenceId = sequenceId.replace(/ /g, "+");
 
-  console.log("Current URL...", CurrentUrl);
-  console.log("sequence_id...", sequenceId);
-  console.log("CourseId...", CourseId);
+  // console.log("Current URL...", CurrentUrl);
+  // console.log("sequence_id...", sequenceId);
+  // console.log("CourseId...", CourseId);
 
   // Trả về promise để xử lý async
   fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
@@ -4596,19 +4596,19 @@
   })
     .then(res => res.json())
     .then(data => {
-      console.log("Data:", data);
+      // console.log("Data:", data);
 
       // tìm item có id = CourseId
       const matchedItem = data.items.find(item => item.id === CourseId);
 
       if (!matchedItem) {
         console.log("Không tìm thấy item với id:", CourseId);
-        return true; // chặn
+        return false; // chặn
       }
 
       if (matchedItem.complete !== true) {
         console.log("Item chưa complete:", matchedItem);
-        return true; // chặn
+        return false; // chặn
       }
 
       var t =
