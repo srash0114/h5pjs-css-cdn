@@ -4602,17 +4602,17 @@
       const matchedItem = data.items.find(item => item.id === CourseId);
 
       if (!matchedItem) {
-        console.warn("Không tìm thấy item với id:", CourseId);
+        console.log("Không tìm thấy item với id:", CourseId);
         return true; // chặn
       }
 
       if (matchedItem.complete !== true) {
-        console.warn("Item chưa complete:", matchedItem);
+        console.log("Item chưa complete:", matchedItem);
         return true; // chặn
       }
 
-      // nếu item tồn tại và complete = true thì thực hiện logic gốc
-      var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
+      var t =
+        arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
       return (
         !this.editor &&
         ("both" === this.preventSkippingMode ||
@@ -4620,7 +4620,7 @@
       );
     })
     .catch(err => {
-      console.error("Error:", err);
+      console.log("Error:", err);
       return true; // chặn nếu lỗi
     });
 }),
