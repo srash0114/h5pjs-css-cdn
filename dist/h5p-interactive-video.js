@@ -4602,13 +4602,13 @@
       const matchedItem = data.items.find(item => item.id === CourseId);
 
       if (!matchedItem) {
-        console.log("Không tìm thấy item với id:", CourseId);
-        return false; // chặn
+        console.log("Không tìm thấy item với id1:", CourseId);
+        return null; // chặn
       }
 
       if (matchedItem.complete !== true) {
-        console.log("Item chưa complete:", matchedItem);
-        return false; // chặn
+        console.log("Item chưa complete1:", matchedItem);
+        return null; // chặn
       }
 
       var t =
