@@ -4571,7 +4571,8 @@
     }),
     (Z.prototype.isSkippingProhibited = function () {
       function getIdsFromCurrentUrl() {
-        const parts = window.location.pathname.split('/').filter(Boolean);
+        const currentUrl = window.location.href;
+        const parts = currentUrl.split('/').filter(Boolean);
         // URL dạng: /learning/course/<courseId>/<sequenceId>/<unitId>
         const courseId = decodeURIComponent(parts[4]);
         const sequenceId = decodeURIComponent(parts[5]);
