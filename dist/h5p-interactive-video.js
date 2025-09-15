@@ -4611,18 +4611,15 @@
         return null; // chặn
       }
 
-      var t =
+
+    })
+    var t =
         arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
       return (
         !this.editor &&
         ("both" === this.preventSkippingMode ||
           ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
-      );
-    })
-    .catch(err => {
-      console.log("Error:", err);
-      return true; // chặn nếu lỗi
-    });
+    );
 }),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
