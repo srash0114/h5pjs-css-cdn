@@ -4570,29 +4570,44 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function () {
-      const CurrentUrl = window.location.href;
-      const parts = CurrentUrl.split("/").filter(Boolean);
-      const CourseId = parts[1];
-      const url = new URL(CurrentUrl);
-      const sequenceId = url.searchParams.get("sequence_id");
-      console.log("Current URL...", CurrentUrl);
-      console.log("sequence_id...", sequenceId);
-      console.log("CourseId...", CourseId);
-      fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
-        method: "GET",
-        credentials: "include" // gửi cookie kèm theo
-      })
-        .then(res => res.json())
-        .then(data => console.log("Data:", data))
-        .catch(err => console.error("Error:", err));
-      var t =
-        arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
+  const CurrentUrl = window.location.href;
+  const parts = CurrentUrl.split("/").filter(Boolean);
+  const CourseId = parts[5];
+  const url = new URL(CurrentUrl);
+  const sequenceId = url.searchParams.get("sequence_id");
+
+  console.log("Current URL...", CurrentUrl);
+  console.log("sequence_id...", sequenceId);
+  console.log("CourseId...", CourseId);
+
+  return fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
+    method: "GET",
+    credentials: "include" // gửi cookie kèm theo
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Data:", data);
+
+      // kiểm tra items
+      const allComplete = data.items.every(item => item.complete === true);
+
+      if (!allComplete) {
+        return null; // nếu có item chưa complete thì return null
+      }
+
+      // logic gốc
+      var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
       return (
         !this.editor &&
         ("both" === this.preventSkippingMode ||
           ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
       );
-    }),
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      return null; // lỗi API thì coi như null
+    });
+}),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
     (Z.ATTACHED = 6),
