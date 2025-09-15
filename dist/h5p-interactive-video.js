@@ -4590,7 +4590,7 @@
   console.log("CourseId...", CourseId);
 
   // Trả về promise để xử lý async
-  return fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
+  fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
     method: "GET",
     credentials: "include", // gửi cookie kèm theo
   })
