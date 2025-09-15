@@ -4574,6 +4574,8 @@
         const currentUrl =  window.location.pathname;
         const parts = currentUrl.split('/').filter(Boolean);
         // URL dạng: /learning/course/<courseId>/<sequenceId>/<unitId>
+        const courseId1 = decodeURIComponent(parts[1]);
+        console.log("courseId:", courseId1);
         const courseId = decodeURIComponent(parts[4]);
         const sequenceId = decodeURIComponent(parts[5]);
         const unitId = decodeURIComponent(parts[6]);
@@ -4586,9 +4588,9 @@
       console.log("sequenceId:", sequenceId);
       console.log("unitId:", unitId);
 
-      window.getUnitStatus(sequenceId, unitId).then(isComplete => {
-        console.log("Unit complete:", isComplete);
-      });
+      // window.getUnitStatus(sequenceId, unitId).then(isComplete => {
+      //   console.log("Unit complete:", isComplete);
+      // });
 
       var t =
         arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
