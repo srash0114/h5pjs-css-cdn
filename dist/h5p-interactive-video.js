@@ -4573,7 +4573,8 @@
       const CurrentUrl = window.location.href;
       const parts = CurrentUrl.split("/").filter(Boolean);
       const CourseId = parts[1];
-      const sequenceId = CurrentUrl.searchParams.get("sequence_id");
+      const url = new URL(CurrentUrl);
+      const sequenceId = url.searchParams.get("sequence_id");
       console.log("Current URL...", CurrentUrl);
       console.log("sequence_id...", sequenceId);
       console.log("CourseId...", CourseId);
