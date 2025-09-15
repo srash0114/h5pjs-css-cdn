@@ -4570,6 +4570,10 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function () {
+      window.getUnitStatus(sequenceId, unitId).then(isComplete => {
+        console.log("Unit complete:", isComplete);
+      });
+
       var t =
         arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
       return (
