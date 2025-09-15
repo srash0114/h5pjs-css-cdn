@@ -4571,6 +4571,7 @@
     }),
     (Z.prototype.isSkippingProhibited = function () {
       const parentUrl = "https://lms-dev.aipower.vn/api/courseware/sequence/block-v1:LMSDEV+sasa+2025_T4+type@sequential+block@ca3efa152f8446328757a631160e40b6";
+      console.log("parentUrl...", parentUrl);
       fetch(parentUrl, {
         method: "GET",
         credentials: "include" // gửi cookie kèm theo
