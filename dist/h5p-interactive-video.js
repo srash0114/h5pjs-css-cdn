@@ -4572,7 +4572,7 @@
     (Z.prototype.isSkippingProhibited = function () {
   const CurrentUrl = window.location.href;
   const parts = CurrentUrl.split("/").filter(Boolean);
-  const CourseId = parts[5]; // id block cần kiểm tra
+  const CourseId = parts[3]; // id block cần kiểm tra
   const url = new URL(CurrentUrl);
   let sequenceId = url.searchParams.get("sequence_id");
 
