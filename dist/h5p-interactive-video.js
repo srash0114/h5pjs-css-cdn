@@ -4570,11 +4570,14 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function () {
-      const parentUrl = "https://lms-dev.aipower.vn/api/courseware/sequence/block-v1:LMSDEV+sasa+2025_T4+type@sequential+block@ca3efa152f8446328757a631160e40b6";
       const CurrentUrl = window.location.href;
+      const parts = CurrentUrl.split("/").fillter(Boolean);
+      CourseId = parts[3];
+      const sequenceId = url.searchParams.get("sequence_id");
       console.log("Current URL...", CurrentUrl);
-      console.log("parentUrl...", parentUrl);
-      fetch(parentUrl, {
+      console.log("sequence_id...", sequenceId);
+      console.log("CourseId...", CourseId);
+      fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
         method: "GET",
         credentials: "include" // gửi cookie kèm theo
       })
