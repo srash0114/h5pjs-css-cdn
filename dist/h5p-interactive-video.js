@@ -4570,8 +4570,14 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function () {
-      const parentUrl = window.parent.location.href;
-      console.log("📌 Parent URL:", parentUrl);
+      const parentUrl = "https://lms-dev.aipower.vn/api/courseware/sequence/block-v1:LMSDEV+sasa+2025_T4+type@sequential+block@ca3efa152f8446328757a631160e40b6";
+      fetch(parentUrl, {
+        method: "GET",
+        credentials: "include" // gửi cookie kèm theo
+      })
+        .then(res => res.json())
+        .then(data => console.log("Data:", data))
+        .catch(err => console.error("Error:", err));
       var t =
         arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
       return (
