@@ -4719,7 +4719,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const sequenceId = parts2[1];
 
   if (!sequenceId) {
-    console.warn("❌ Không tìm thấy sequence_id trong URL");
+    // console.warn("❌ Không tìm thấy sequence_id trong URL");
     return; // dừng hẳn
   }
 
@@ -4730,9 +4730,9 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(data => {
       window.matchedItem = data.items.find(item => item.id === CourseId);
-      console.log("✅ matchedItem đã fetch:", window.matchedItem);
+      // console.log("✅ matchedItem đã fetch:", window.matchedItem);
     })
     .catch(err => {
-      console.error("❌ Lỗi fetch matchedItem:", err);
+      // console.error("❌ Lỗi fetch matchedItem:", err);
     });
 });
