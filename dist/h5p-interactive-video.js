@@ -4606,10 +4606,12 @@
       }
       console.log("OKEOKE");
       // logic gốc
-      return (
-        !this.editor &&
-        ("both" === this.preventSkippingMode ||
-          ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
+      var t =
+          arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
+        return (
+          !this.editor &&
+          ("both" === this.preventSkippingMode ||
+            ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
       );
     }),
     (Z.SEEKING = 4),
