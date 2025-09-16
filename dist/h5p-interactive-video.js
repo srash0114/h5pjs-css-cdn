@@ -3643,7 +3643,7 @@
 
             if (!sequenceId) {
               console.log("Không tìm thấy sequence_id trong URL");
-              return true; // chặn luôn
+              return e.updateCurrentTime(0); // chặn luôn
             }
 
             const res = await fetch(
@@ -3655,12 +3655,12 @@
             const matchedItem = data.items.find(item => item.id === CourseId);
             if (!matchedItem) {
               console.log("Không tìm thấy item:", CourseId);
-              return true; // chặn
+              return e.updateCurrentTime(0); // chặn
             }
 
             if (matchedItem.complete !== true) {
               console.log("Item chưa complete:", matchedItem);
-              return true; // chặn
+              return e.updateCurrentTime(0); // chặn
             }
             console.log("OKEOKE");
 
