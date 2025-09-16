@@ -4579,7 +4579,7 @@
       const sequenceId = parts2[1];
 
       if (!sequenceId) {
-        console.warn("Không tìm thấy sequence_id trong URL");
+        console.log("Không tìm thấy sequence_id trong URL");
         return true; // chặn luôn
       }
 
@@ -4601,10 +4601,10 @@
           return true; // chặn
         }
       } catch (err) {
-        console.error("Fetch error:", err);
+        console.log("Fetch error:", err);
         return true; // lỗi thì chặn
       }
-
+      console.log("OKEOKE");
       // logic gốc
       return (
         !this.editor &&
