@@ -4569,7 +4569,7 @@
         e
       );
     }),
-    (Z.prototype.isSkippingProhibited = async function (t = 0) {
+    (Z.prototype.isSkippingProhibited = function () {
       const CurrentUrl = window.location.href;
       const parts1 = CurrentUrl.split("/").filter(Boolean);
       const parts2 = CurrentUrl.split("&sequence_id=").filter(Boolean);
