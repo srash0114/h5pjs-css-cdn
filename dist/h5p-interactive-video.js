@@ -4570,6 +4570,16 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function () {
+      const CurrentUrl = window.location.href;
+      const parts = CurrentUrl.split("/").filter(Boolean);
+      let CourseId = parts[3];
+      CourseId = CourseId.split("?")[0];
+      const url = new URL(CurrentUrl);
+      let sequenceId = url.searchParams.get("sequence_id");
+      if (!sequenceId) {
+        console.warn("Không tìm thấy sequence_id trong URL");
+        return 0; // chặn luôn
+      }
       var t =
         arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
       return (
