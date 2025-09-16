@@ -4571,11 +4571,13 @@
     }),
     (Z.prototype.isSkippingProhibited = function () {
       const CurrentUrl = window.location.href;
-      const parts = CurrentUrl.split("/").filter(Boolean);
-      let CourseId = parts[3];
+      const parts1 = CurrentUrl.split("/").filter(Boolean);
+      const parts2 = CurrentUrl.split("&sequence_id=").filter(Boolean);
+      let CourseId = parts1[3];
       CourseId = CourseId.split("?")[0];
-      const url = new URL(CurrentUrl);
-      let sequenceId = url.searchParams.get("sequence_id");
+      const sequenceId = parts2[1];
+      console.log("CourseId:", CourseId);
+      console.log("sequenceId:", sequenceId);
       if (!sequenceId) {
         console.warn("Không tìm thấy sequence_id trong URL");
         return !window.allowSkip; // chặn luôn
