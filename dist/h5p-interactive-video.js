@@ -4570,6 +4570,7 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function () {
+      return true; // chặn
       const CurrentUrl = window.location.href;
       const parts1 = CurrentUrl.split("/").filter(Boolean);
       const parts2 = CurrentUrl.split("&sequence_id=").filter(Boolean);
