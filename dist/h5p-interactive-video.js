@@ -4571,11 +4571,14 @@
       );
     }),
     (Z.prototype.isSkippingProhibited = function () {
+        if (window.matchedItem.complete !== true && t <= this.maxTimeReached) {
+          return false; // không chặn
+        }
         if (window.matchedItem.complete !== true) {
-          console.log("Item chưa complete1:", window.matchedItem);
+          // console.log("Item chưa complete1:", window.matchedItem);
           return true; // chặn
         }
-        console.log("OKEOKE");
+        // console.log("OKEOKE");
         var t =
           arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
         return (
