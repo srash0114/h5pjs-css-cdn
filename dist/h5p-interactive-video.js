@@ -4569,7 +4569,7 @@
         e
       );
     }),
-    (Z.prototype.isSkippingProhibited = async function () {
+    (Z.prototype.isSkippingProhibited = function () {
       const CurrentUrl = window.location.href;
       const parts1 = CurrentUrl.split("/").filter(Boolean);
       const parts2 = CurrentUrl.split("&sequence_id=").filter(Boolean);
@@ -4583,11 +4583,11 @@
         return "both"; // chặn luôn
       }
 
-        const res = await fetch(
+        const res = fetch(
           `https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`,
           { method: "GET", credentials: "include" }
         );
-        const data = await res.json();
+        const data = res.json();
 
         const matchedItem = data.items.find(item => item.id === CourseId);
         if (!matchedItem) {
