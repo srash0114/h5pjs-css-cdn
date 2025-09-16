@@ -4583,7 +4583,6 @@
         return true; // chặn luôn
       }
 
-      try {
         const res = await fetch(
           `https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`,
           { method: "GET", credentials: "include" }
@@ -4600,10 +4599,6 @@
           console.log("Item chưa complete:", matchedItem);
           return true; // chặn
         }
-      } catch (err) {
-        console.log("Fetch error:", err);
-        return true; // lỗi thì chặn
-      }
       console.log("OKEOKE");
       // logic gốc
       var t =
