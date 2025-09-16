@@ -4583,7 +4583,6 @@
           ("both" === this.preventSkippingMode ||
             ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
         );
-      })
     }),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
