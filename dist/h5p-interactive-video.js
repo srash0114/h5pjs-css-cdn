@@ -4580,7 +4580,7 @@
 
       if (!sequenceId) {
         console.log("Không tìm thấy sequence_id trong URL");
-        return "both" === this.preventSkippingMode; // chặn luôn
+        return "both" === this.preventSkippingMode ; // chặn luôn
       }
 
     fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
@@ -4603,15 +4603,15 @@
           console.log("Item chưa complete1:", matchedItem);
           return "both" === this.preventSkippingMode ; // chặn
         }
+        console.log("OKEOKE");
+        var t =
+          arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
+        return (
+          !this.editor &&
+          ("both" === this.preventSkippingMode ||
+            ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
+        );
       })
-      console.log("OKEOKE");
-      var t =
-        arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
-      return (
-        !this.editor &&
-        ("both" === this.preventSkippingMode ||
-          ("none" !== this.preventSkippingMode && this.maxTimeReached < t))
-      );
     }),
     (Z.SEEKING = 4),
     (Z.LOADED = 5),
