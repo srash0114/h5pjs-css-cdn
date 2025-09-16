@@ -4569,42 +4569,43 @@
         e
       );
     }),
-    (Z.prototype.isSkippingProhibited = function () {
+    (Z.prototype.isSkippingProhibited = async function (t = 0) {
       const CurrentUrl = window.location.href;
       const parts1 = CurrentUrl.split("/").filter(Boolean);
       const parts2 = CurrentUrl.split("&sequence_id=").filter(Boolean);
+
       let CourseId = parts1[3];
       CourseId = CourseId.split("?")[0];
       const sequenceId = parts2[1];
-      console.log("CourseId:", CourseId);
-      console.log("sequenceId:", sequenceId);
+
       if (!sequenceId) {
         console.warn("Không tìm thấy sequence_id trong URL");
-        return 0; // chặn luôn
+        return true; // chặn luôn
       }
-      fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
-        method: "GET",
-        credentials: "include", // gửi cookie kèm theo
-      })
-        .then(res => res.json())
-        .then(data => {
-          // console.log("Data:", data);
 
-          // tìm item có id = CourseId
-          const matchedItem = data.items.find(item => item.id === CourseId);
+      try {
+        const res = await fetch(
+          `https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`,
+          { method: "GET", credentials: "include" }
+        );
+        const data = await res.json();
 
-          if (!matchedItem) {
-            console.log("Không tìm thấy item với id1:", CourseId);
-            return matchedItem; // chặn
-          }
+        const matchedItem = data.items.find(item => item.id === CourseId);
+        if (!matchedItem) {
+          console.log("Không tìm thấy item:", CourseId);
+          return true; // chặn
+        }
 
-          if (matchedItem.complete !== true) {
-            console.log("Item chưa complete1:", matchedItem);
-            return matchedItem.complete; // chặn
-          }
-        })
-      var t =
-        arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
+        if (matchedItem.complete !== true) {
+          console.log("Item chưa complete:", matchedItem);
+          return true; // chặn
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+        return true; // lỗi thì chặn
+      }
+
+      // logic gốc
       return (
         !this.editor &&
         ("both" === this.preventSkippingMode ||
