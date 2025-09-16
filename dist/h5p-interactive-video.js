@@ -3632,38 +3632,7 @@
               e.removeSplash(),
               e.$overlay.addClass("h5p-visible"));
           },
-          slide: async function (t, o) {
-            const CurrentUrl = window.location.href;
-            const parts1 = CurrentUrl.split("/").filter(Boolean);
-            const parts2 = CurrentUrl.split("&sequence_id=").filter(Boolean);
-
-            let CourseId = parts1[3];
-            CourseId = CourseId.split("?")[0];
-            const sequenceId = parts2[1];
-
-            if (!sequenceId) {
-              console.log("Không tìm thấy sequence_id trong URL");
-              return e.updateCurrentTime(0); // chặn luôn
-            }
-
-            const res = await fetch(
-              `https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`,
-              { method: "GET", credentials: "include" }
-            );
-            const data = await res.json();
-
-            const matchedItem = data.items.find(item => item.id === CourseId);
-            if (!matchedItem) {
-              console.log("Không tìm thấy item1:", CourseId);
-              return e.seek(0), e.updateInteractions(0), e.updateCurrentTime(0), n; // chặn
-            }
-
-            if (matchedItem.complete !== true) {
-              console.log("Item chưa complete1:", matchedItem);
-              return e.seek(0), e.updateInteractions(0), e.updateCurrentTime(0), n; // chặn
-            }
-            console.log("OKEOKE");
-
+          slide: function (t, o) {
             var n = x(t, [C.ARROW_LEFT, C.ARROW_RIGHT]),
               i = o.value;
             if ((e.isSkippingProhibited(i) && (i = e.maxTimeReached), n)) {
@@ -4600,7 +4569,37 @@
         e
       );
     }),
-    (Z.prototype.isSkippingProhibited = function () {
+    (Z.prototype.isSkippingProhibited = async function () {
+      const CurrentUrl = window.location.href;
+      const parts1 = CurrentUrl.split("/").filter(Boolean);
+      const parts2 = CurrentUrl.split("&sequence_id=").filter(Boolean);
+
+      let CourseId = parts1[3];
+      CourseId = CourseId.split("?")[0];
+      const sequenceId = parts2[1];
+
+      if (!sequenceId) {
+        console.log("Không tìm thấy sequence_id trong URL");
+        return "both"; // chặn luôn
+      }
+
+        const res = await fetch(
+          `https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`,
+          { method: "GET", credentials: "include" }
+        );
+        const data = await res.json();
+
+        const matchedItem = data.items.find(item => item.id === CourseId);
+        if (!matchedItem) {
+          console.log("Không tìm thấy item:", CourseId);
+          return "both"; // chặn
+        }
+
+        if (matchedItem.complete !== true) {
+          console.log("Item chưa complete:", matchedItem);
+          return "both"; // chặn
+        }
+      console.log("OKEOKE");
       var t =
         arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
       return (
