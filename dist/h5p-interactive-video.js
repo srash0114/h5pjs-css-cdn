@@ -4580,25 +4580,30 @@
 
       if (!sequenceId) {
         console.log("Không tìm thấy sequence_id trong URL");
-        return "both"; // chặn luôn
+        return "both" === this.preventSkippingMode; // chặn luôn
       }
 
-        const res = fetch(
-          `https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`,
-          { method: "GET", credentials: "include" }
-        );
-        const data = res.json();
+    fetch(`https://lms-dev.aipower.vn/api/courseware/sequence/${sequenceId}`, {
+      method: "GET",
+      credentials: "include", // gửi cookie kèm theo
+    })
+      .then(res => res.json())
+      .then(data => {
+        // console.log("Data:", data);
 
+        // tìm item có id = CourseId
         const matchedItem = data.items.find(item => item.id === CourseId);
+
         if (!matchedItem) {
-          console.log("Không tìm thấy item:", CourseId);
-          return "both"; // chặn
+          console.log("Không tìm thấy item với id1:", CourseId);
+          return "both" === this.preventSkippingMode ; // chặn
         }
 
         if (matchedItem.complete !== true) {
-          console.log("Item chưa complete:", matchedItem);
-          return "both"; // chặn
+          console.log("Item chưa complete1:", matchedItem);
+          return "both" === this.preventSkippingMode ; // chặn
         }
+      })
       console.log("OKEOKE");
       var t =
         arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
