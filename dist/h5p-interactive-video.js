@@ -3654,13 +3654,13 @@
 
             const matchedItem = data.items.find(item => item.id === CourseId);
             if (!matchedItem) {
-              console.log("Không tìm thấy item:", CourseId);
-              return e.updateCurrentTime(0); // chặn
+              console.log("Không tìm thấy item1:", CourseId);
+              return e.seek(0), e.updateInteractions(0), e.updateCurrentTime(0), n; // chặn
             }
 
             if (matchedItem.complete !== true) {
-              console.log("Item chưa complete:", matchedItem);
-              return e.updateCurrentTime(0); // chặn
+              console.log("Item chưa complete1:", matchedItem);
+              return e.seek(0), e.updateInteractions(0), e.updateCurrentTime(0), n; // chặn
             }
             console.log("OKEOKE");
 
